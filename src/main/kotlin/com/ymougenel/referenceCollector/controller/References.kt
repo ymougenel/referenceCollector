@@ -12,6 +12,7 @@ import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import javax.validation.Valid
 
 @Controller
@@ -37,12 +38,14 @@ class References {
         }
 
         referencesDao.save(reference);
-        return "/home"
+        return "redirect:/references"
     }
 
     @GetMapping
-    fun paginate(model: Model): String {
-        val findAll = referencesDao.findAll(PageRequest.of(0, 5))
+    fun paginate(model: Model,
+                 @RequestParam("page", required = false, defaultValue = "0") page: Int,
+                 @RequestParam("size", required = false, defaultValue = "5") size: Int): String {
+        val findAll = referencesDao.findAll(PageRequest.of(page, size))
         model.addAttribute("page", findAll)
         return "refList"
     }
