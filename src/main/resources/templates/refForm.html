@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reference Collector</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<h1>Add your reference!</h1>
+
+<form method="POST" th:action="@{/references}" th:object="${reference}">
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">Reference Error</span>
+
+
+    <div>
+
+
+        <h3>Name:</h3>
+        <input type="text" th:field="*{name}"/>
+        <span th:text="${#fields.hasErrors('name')}">XXX</span>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">Name Error</span>
+        <br/>
+
+        <h3>URL:</h3>
+        <input type="text" th:field="*{url}"/>
+        <span th:text="${#fields.hasErrors('url')}">XXX</span>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('url')}"
+              th:errors="*{url}">URL Error</span>
+        <br/>
+
+        <button>Submit your reference</button>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reference Collector</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<h1>Hello from List!</h1>
+
+<table>
+    <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>URL</th>
+    <th>Categories</th>
+    </thead>
+    <th:block th:each="ref : ${page.iterator()}">
+        <tr>
+            <td th:text="${ref.id}">...</td>
+            <td th:text="${ref.name}">...</td>
+            <td th:text="${ref.url}">...</td>
+            <td th:text="${ref.category}">...</td>
+
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.ymougenel.referenceCollector.persistance
+package com.ymougenel.referenceCollector.persistence
 
 import com.ymougenel.referenceCollector.model.Reference
 import org.springframework.data.jpa.repository.JpaRepository

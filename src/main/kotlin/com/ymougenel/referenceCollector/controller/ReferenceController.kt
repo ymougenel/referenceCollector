@@ -1,7 +1,7 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.persistance.ReferenceDAO
+import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @CrossOrigin
 @RestController
-@RequestMapping(path = arrayOf("/references"))
+@RequestMapping(path = arrayOf("/references2"))
 class ReferenceController {
 
     private var ReferencesDao: ReferenceDAO
@@ -19,7 +19,7 @@ class ReferenceController {
         this.ReferencesDao = ReferencesDAO
     }
 
-    @PostMapping(path = arrayOf("/"), consumes = [MediaType.APPLICATION_JSON_VALUE] )
+    @PostMapping(path = arrayOf("/"), consumes = [MediaType.APPLICATION_JSON_VALUE])
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody Reference: Reference) {
         ReferencesDao.save(Reference)
