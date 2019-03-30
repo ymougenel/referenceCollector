@@ -3,40 +3,53 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Reference Collector</title>
-    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 
 <body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">RC</a>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/references}">References</a>
+    </li>
+</nav>
+<br />
+
 <h1>Add your reference!</h1>
 
-<form method="POST" th:action="@{/references}" th:object="${reference}">
+<form method="POST" th:action="@{/references}" th:object="${reference}" class="was-validated">
 
     <span class="validationError"
           th:if="${#fields.hasErrors('name')}"
           th:errors="*{name}">Reference Error</span>
 
 
-    <div>
+    <div class="form-group">
+        <label for="name">Name</label>
 
-
-        <h3>Name:</h3>
-        <input type="text" th:field="*{name}"/>
-        <span th:text="${#fields.hasErrors('name')}">XXX</span>
+        <input type="text"  class="form-control"  th:field="*{name}"/>
+        <!--<span th:text="${#fields.hasErrors('name')}">XXX</span>-->
         <span class="validationError"
               th:if="${#fields.hasErrors('name')}"
               th:errors="*{name}">Name Error</span>
         <br/>
 
-        <h3>URL:</h3>
-        <input type="text" th:field="*{url}"/>
-        <span th:text="${#fields.hasErrors('url')}">XXX</span>
+    </div>
+    <div class="form-group">
+
+        <label for="Url">Url</label>
+        <input type="text"  class="form-control"  th:field="*{url}"/>
+        <!--<span th:text="${#fields.hasErrors('url')}">XXX</span>-->
         <span class="validationError"
               th:if="${#fields.hasErrors('url')}"
               th:errors="*{url}">URL Error</span>
         <br/>
 
-        <button>Submit your reference</button>
     </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

@@ -3,13 +3,21 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Reference Collector</title>
-    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <link th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 
 <body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">RC</a>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/references}">References</a>
+    </li>
+</nav>
+<br />
+
 <h1>Hello from List!</h1>
 
-<table>
+<table class="table table-striped">
     <thead>
     <th>ID</th>
     <th>Name</th>
@@ -28,6 +36,9 @@
 </table>
 
 <br />
-<a th:href="@{/references/new}" id="create">New reference</a>
+<a class="btn btn-primary"  th:href="@{/references/new}" id="create">New reference</a>
+
+<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
 </body>
 </html>
