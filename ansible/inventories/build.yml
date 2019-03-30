@@ -1,0 +1,8 @@
+production:
+  hosts:
+    production:
+      # TODO change me
+      ansible_host: ymougenel-build.takima.io
+  vars:
+    ansible_user: centos
+    workspace: /home/centos/referenceCollector
