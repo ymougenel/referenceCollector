@@ -16,6 +16,6 @@ data class Reference(
         val url: String?,
         @get:NotBlank(message = "Name is required")
         val name: String?,
-        var category: String?) {
-    constructor() : this(0L, "", "", "")
+        var type: ReferenceType?) {
+    constructor() : this(0L, "", "", null)
 }

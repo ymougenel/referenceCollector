@@ -1,6 +1,7 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
+import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
@@ -28,6 +29,7 @@ class References {
     @GetMapping(path = arrayOf("/new"))
     fun getForm(model: Model): String {
         model.addAttribute("reference", Reference())
+        model.addAttribute("types", ReferenceType.values())
         return "refForm"
     }
 
