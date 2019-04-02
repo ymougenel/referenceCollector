@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank
 data class Reference(
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Id
-        val id: Long?,
+        var id: Long?,
         @get:URL
         val url: String?,
         @get:NotBlank(message = "Name is required")
