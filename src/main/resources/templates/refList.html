@@ -23,10 +23,10 @@
 
 <table class="table table-striped">
     <thead>
-    <th>ID</th>
-    <th>Name</th>
-    <th>URL</th>
-    <th>Categories</th>
+    <th><a th:href="@{/references(size=${page.size}, filterBy='id', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">ID</a></th>
+    <th><a th:href="@{/references(size=${page.size}, filterBy='name', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">Name</a></th>
+    <th><a th:href="@{/references(size=${page.size}, filterBy='url', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">URL</a></th>
+    <th><a th:href="@{/references(size=${page.size}, filterBy='type', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">Type</a></th>
     </thead>
     <th:block th:each="ref : ${page.iterator()}">
         <tr>
@@ -38,7 +38,33 @@
         </tr>
     </th:block>
 </table>
-
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${page.number == 0} ? disabled">
+            <a class="page-link" th:href="@{/references(size=${page.size}, page=${page.number-1})}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li th:each="pageNumber : ${pageNumbers}" class="page-item" th:classappend="${pageNumber==page.number + 1} ? active">
+            <a class="page-link" th:href="@{/references(size=${page.size}, page=${pageNumber-1})}"
+                                 th:text=${pageNumber}>
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${page.totalPages == page.number +1} ? disabled">
+            <a class="page-link" th:href="@{/references(size=${page.size}, page=${page.number+1})}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!--<div th:if="${page.totalPages >= 0}" class="pagination"-->
+     <!--th:each="pageNumber : ${pageNumbers}">-->
+    <!--<a th:href="@{/references(size=${page.size}, page=${pageNumber})}"-->
+       <!--th:text=${pageNumber}-->
+       <!--th:class="${pageNumber==page.number + 1} ? active"></a>-->
+<!--</div>-->
 <br />
 <a class="btn btn-primary"  th:href="@{/references/new}" id="create">New reference</a>
 
