@@ -13,6 +13,9 @@
         <a class="nav-link" th:href="@{/references}">References</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" th:href="@{/labels}">Labels</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
     </li>
 
@@ -27,6 +30,8 @@
     <th><a th:href="@{/references(size=${page.size}, filterBy='name', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">Name</a></th>
     <th><a th:href="@{/references(size=${page.size}, filterBy='url', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">URL</a></th>
     <th><a th:href="@{/references(size=${page.size}, filterBy='type', direction=${direction == 'ASC' ? 'DESC' : 'ASC'})}">Type</a></th>
+    <th>Labels</th>
+    <th>Actions</th>
     </thead>
     <th:block th:each="ref : ${page.iterator()}">
         <tr>
@@ -34,6 +39,8 @@
             <td th:text="${ref.name}">...</td>
             <td th:text="${ref.url}">...</td>
             <td th:text="${ref.type}">...</td>
+            <td ><span class="badge" th:each="label : ${ref.labels}" th:text="${label.name }"> </span> </td>
+            <td >...</td>
 
         </tr>
     </th:block>

@@ -63,6 +63,11 @@
         <br/>
 
     </div>
+
+    <div th:each="label : ${labels}" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" th:field="*{labels}" th:id="${label.id}" th:value="${label.id}"             >
+        <label class="custom-control-label" th:for="${label.id}" th:text="${label.name}" >...</label>
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 

@@ -2,10 +2,10 @@ package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.model.ReferenceType
+import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -24,15 +24,27 @@ import java.util.stream.IntStream
 @RequestMapping("/references")
 class References {
     private lateinit var referencesDao: ReferenceDAO
+    private lateinit var labelDAO: LabelDAO
+
     private var PAGINATION_RANGE = 3;
     @Autowired
-    constructor(ReferencesDAO: ReferenceDAO) {
-        this.referencesDao = ReferencesDAO
+    constructor(referencesDAO: ReferenceDAO, labelDAO: LabelDAO) {
+        this.referencesDao = referencesDAO
+        this.labelDAO = labelDAO
     }
 
     @GetMapping(path = arrayOf("/new"))
     fun getForm(model: Model): String {
         model.addAttribute("reference", Reference())
+        model.addAttribute("labels", labelDAO.findAll())
+        model.addAttribute("types", ReferenceType.values())
+        return "refForm"
+    }
+
+    @GetMapping(path = arrayOf("/edit"))
+    fun editForm(model: Model, @RequestParam("id") id: Long): String {
+        model.addAttribute("reference", referencesDao.findById(id))
+        model.addAttribute("labels", labelDAO.findAll())
         model.addAttribute("types", ReferenceType.values())
         return "refForm"
     }
@@ -54,21 +66,22 @@ class References {
                  @RequestParam("direction", required = false, defaultValue = "ASC") direction: String,
                  @RequestParam("filterBy", required = false, defaultValue = "id") filterBy: String
                 ): String {
-        val findAll = referencesDao.findAll(PageRequest.of(page, size, Sort.Direction.fromString(direction), filterBy))
-        model.addAttribute("page", findAll)
+        val references = referencesDao.findAll(PageRequest.of(page, size, Sort.Direction.fromString(direction), filterBy))
+
+        model.addAttribute("page", references)
         model.addAttribute("direction", direction)
 
-        if (findAll.totalPages > 0) {
-            val pageIndex = findAll.number +1
+        if (references.totalPages > 0) {
+            val pageIndex = references.number +1
             val minRange: Int
             val maxRange: Int
             if (pageIndex == 1) {
                 minRange = 1;
-                maxRange = Math.min(PAGINATION_RANGE, findAll.totalPages)
+                maxRange = Math.min(PAGINATION_RANGE, references.totalPages)
             }
-            else if (pageIndex >= findAll.totalPages) {
-                maxRange = findAll.totalPages
-                minRange = Math.max(1,findAll.totalPages - PAGINATION_RANGE + 1)
+            else if (pageIndex >= references.totalPages) {
+                maxRange = references.totalPages
+                minRange = Math.max(1,references.totalPages - PAGINATION_RANGE + 1)
             }
             else {
                 minRange = pageIndex - PAGINATION_RANGE / 2
