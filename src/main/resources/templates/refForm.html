@@ -20,7 +20,7 @@
 </nav>
 <br />
 
-<h1>Add your reference!</h1>
+<h1>Your reference!</h1>
 
 <form method="POST" th:action="@{/references}" th:object="${reference}" class="was-validated">
 
@@ -28,6 +28,8 @@
           th:if="${#fields.hasErrors('name')}"
           th:errors="*{name}">Reference Error</span>
 
+
+    <input type="hidden" name="id" th:field="*{id}">
 
     <div class="form-group">
         <label for="name">Name</label>
@@ -63,9 +65,8 @@
         <br/>
 
     </div>
-
     <div th:each="label : ${labels}" class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" th:field="*{labels}" th:id="${label.id}" th:value="${label.id}"             >
+        <input type="checkbox" class="custom-control-input" th:field="*{labels}" th:id="${label.id}" th:value="${label.id}" th:checked="${true}">
         <label class="custom-control-label" th:for="${label.id}" th:text="${label.name}" >...</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>

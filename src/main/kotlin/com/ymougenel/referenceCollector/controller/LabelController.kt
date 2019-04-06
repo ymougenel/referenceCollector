@@ -2,7 +2,6 @@ package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.persistence.LabelDAO
-import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

@@ -4,6 +4,7 @@
 <head>
     <title>Reference Collector</title>
     <link th:href="@{webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -40,7 +41,8 @@
             <td th:text="${ref.url}">...</td>
             <td th:text="${ref.type}">...</td>
             <td ><span class="badge" th:each="label : ${ref.labels}" th:text="${label.name }"> </span> </td>
-            <td >...</td>
+            <td ><a th:href="@{/references/edit(id=${ref.id})}"><i class="far fa-edit"></i></a>
+                <a th:href="@{/references/delete(id=${ref.id})}"><i class="far fa-trash-alt"></i></a></td>
 
         </tr>
     </th:block>
@@ -76,6 +78,7 @@
 <a class="btn btn-primary"  th:href="@{/references/new}" id="create">New reference</a>
 
 <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<!--<script th:src="@{webjars/font-awesome/5.8.1/js/fontawesome.min.js}"></script>-->
 
 </body>
 </html>

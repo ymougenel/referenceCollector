@@ -10,10 +10,8 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.validation.Valid
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -49,6 +47,13 @@ class References {
         return "refForm"
     }
 
+    // TODO: change me to deleteMapping
+    @GetMapping(path = arrayOf("/delete"))
+    fun deleteRef(model: Model, @RequestParam("id") id: Long): String {
+        referencesDao.deleteById(id)
+        return "redirect:/references"
+    }
+
     @PostMapping
     fun postRef(@Valid reference: Reference, errors: Errors): String {
         if (errors.hasErrors()) {
@@ -62,7 +67,7 @@ class References {
     @GetMapping
     fun paginate(model: Model,
                  @RequestParam("page", required = false, defaultValue = "0") page: Int,
-                 @RequestParam("size", required = false, defaultValue = "2") size: Int,
+                 @RequestParam("size", required = false, defaultValue = "5") size: Int,
                  @RequestParam("direction", required = false, defaultValue = "ASC") direction: String,
                  @RequestParam("filterBy", required = false, defaultValue = "id") filterBy: String
                 ): String {
