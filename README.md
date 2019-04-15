@@ -1,6 +1,18 @@
 # referenceCollector
 
 
+# Use it
+
+## Requirements
+* docker
+* docker-compose
+* maven
+## Launch the application
+* Get the application: `git clone git@github.com:ymougenel/referenceCollector.git`
+* Compile it & generate the docker image: `mvn clean package dockerfile:build`
+* Run the application: `docker-compose up`
+> Your application is now available: [http://localhost:8092/references](http://localhost:8092/references)
+
 # Development
 
 Run a postgres database:
@@ -20,5 +32,5 @@ mvn clean package
 
 Run the generated jar
 ```shell
-java -Dspring.profiles.active=dev -jar target/referenceCollector-0.0.1-SNAPSHOT.jar
+java -Dspring.profiles.active=dev -jar target/referenceCollector-X.X.X.jar
 ```

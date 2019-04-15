@@ -8,9 +8,12 @@
 
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">RC</a>
+    <a class="navbar-brand" th:href="@{/references}">RC</a>
     <li class="nav-item">
         <a class="nav-link" th:href="@{/references}">References</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/labels}">Labels</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
@@ -19,7 +22,7 @@
 </nav>
 <br />
 
-<h1>Hello from List!</h1>
+<h1>Labels!</h1>
 <div >
     <a th:each="label : ${labels}" href="#" class="badge badge-primary" th:text="${label.name}">...</a>
 </div>
