@@ -1,6 +1,6 @@
-# referenceCollector
+# ReferenceCollector
 
-
+Saves references (article, video) links.
 # Use it
 
 ## Requirements

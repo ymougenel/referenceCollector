@@ -4,6 +4,7 @@ services:
 
   rc-database:
     image: postgres:11.1
+    container_name: rc-database
     environment:
       - POSTGRES_PASSWORD=dbp4ss
       - POSTGRES_DB=reference_collector
@@ -12,6 +13,7 @@ services:
       - "5432:5432"
   rc-back:
     image: ymougenel/reference-collector
+    container_name: rc-app
     depends_on:
       - rc-database
     ports:

@@ -44,11 +44,21 @@ class Profile {
 
 
     @PostMapping(path = arrayOf("/importReferences"))
-    fun handleFileUpload(@RequestParam("file") file: MultipartFile,
+    fun handleFileU463e1adb4748pload(@RequestParam("file") file: MultipartFile,
                          redirectAttributes: RedirectAttributes): String {
         val references = mapper.readValue<List<Reference>>(file.inputStream)
-        // Persist labels and update references with new label ids
-        references.forEach { it.labels = labelDAO.saveAll(it.labels!!) }
+
+        // Persist all label (only once)
+        references
+                .flatMap { it.labels!!.asIterable() }
+                .toSet()
+                .forEach { labelDAO.save(it) }
+
+
+        // Update reference ids
+        for (ref in references)
+            for (lab in ref.labels!!)
+                lab.id = labelDAO.findByName(lab.name).id
         referencesDao.saveAll(references)
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
