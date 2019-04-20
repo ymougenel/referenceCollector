@@ -1,5 +1,7 @@
 # ReferenceCollector
 
+<img src="./.README/logo.png" alt="logo" width="200"/>
+
 Saves references (article, video) links.
 # Use it
 
