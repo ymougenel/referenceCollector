@@ -1,4 +1,4 @@
-- hosts: production
+- hosts: server
   become: yes
   gather_facts: no
   roles:

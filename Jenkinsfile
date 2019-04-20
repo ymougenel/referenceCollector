@@ -9,16 +9,22 @@ pipeline {
         stage("Test") {
             steps {
               script {
-                  /*docker.image(MAVEN_IMAGE).inside('-v /var/lib/jenkins/.m2:/root/.m2') {
+                  docker.image(MAVEN_IMAGE).inside('-v /var/lib/jenkins/.m2:/root/.m2') {
                       sh 'mvn test'
-                   }*/
-                  sh 'ls'
+                  }
                }
             }
         }
         stage("Deploy Dev") {
+            when { branch 'develop' }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: 'ansible/inventories/build.yml', playbook: 'ansible/playbook.yml')
+              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/build.yml', playbook: 'ansible/playbook.yml')
+            }
+        }
+        stage("Deploy Prod") {
+            when { branch 'master' }
+            steps {
+              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/prod.yml', playbook: 'ansible/playbook.yml')
             }
         }
     }
