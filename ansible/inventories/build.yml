@@ -1,0 +1,8 @@
+all:
+  hosts:
+    server:
+      ansible_host: MY_SERVER
+
+  vars:
+    ansible_user: centos
+    workspace: /home/centos/referenceCollector
