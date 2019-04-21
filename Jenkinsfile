@@ -16,15 +16,20 @@ pipeline {
             }
         }
         stage("Deploy Dev") {
-            when { branch 'develop' }
+            when {
+                environment name: 'env', value: 'dev'
+             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/build.yml', playbook: 'ansible/playbook.yml')
+              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
             }
         }
         stage("Deploy Prod") {
-            when { branch 'master' }
+            when {
+                environment name: 'env', value: 'prod'
+              }
+             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/prod.yml', playbook: 'ansible/playbook.yml')
+              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/prod.yml', playbook: 'ansible/playbook.yml')
             }
         }
     }
