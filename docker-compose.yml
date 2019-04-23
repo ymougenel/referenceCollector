@@ -1,0 +1,28 @@
+version: '2.1'
+
+services: 
+
+  rc-database:
+    image: postgres:11.1
+    container_name: rc-database
+    environment:
+      - POSTGRES_PASSWORD=dbp4ss
+      - POSTGRES_DB=reference_collector
+      - POSTGRES_USER=dbuser
+    ports:
+      - "5432:5432"
+  rc-back:
+    image: ymougenel/reference-collector
+    container_name: rc-app
+    depends_on:
+      - rc-database
+    ports:
+      - 8092:8092
+    environment:
+      - DATABASE_HOST=rc-database
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=reference_collector
+      - DATABASE_PORT=5432
+    command: ["./docker-wait-for-it.sh"]
+

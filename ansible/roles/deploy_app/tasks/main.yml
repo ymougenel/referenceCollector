@@ -1,0 +1,36 @@
+---
+
+- name: clean workspace
+  file:
+    name: /home/centos/referenceCollector
+    state: absent
+
+- name: Stop the running app
+  docker_container:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - rc-app
+    - rc-database
+
+- name: Recreate workspace
+  file:
+    name: /home/centos/referenceCollector
+    state: directory
+
+- name: Copy the workspace
+  copy:
+    src: "../../../../{{ item }}"
+    dest: "{{ workspace }}"
+  with_items:
+    - docker-compose.yml
+    - src
+    - Dockerfile
+    - docker-wait-for-it.sh
+    - pom.xml
+
+- name: Compile the app & build image
+  shell: "cd {{ workspace }}; mvn clean compile  package dockerfile:build"
+
+- name: "Launch the docker-compose"
+  shell: "cd {{ workspace }}; docker-compose up -d"

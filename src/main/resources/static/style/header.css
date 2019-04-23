@@ -1,0 +1,13 @@
+
+.logo {
+    width: 40px;
+}
+
+.nav-link  {
+    color: #d9dce0
+}
+
+.nav-link:hover {
+    font-weight: bold;
+    color: #d9dce0
+}

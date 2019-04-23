@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reference Collector</title>
+    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../style/header.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a th:href="@{/references}"><img class="logo navbar-brand" th:src="@{/images/logo.png}" /></a>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/references}">References</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/labels}">Labels</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
+    </li>
+
+</nav>
+<br />
+
+<h1>Your reference!</h1>
+
+<form method="POST" th:action="@{/references}" th:object="${reference}" class="was-validated">
+
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">Reference Error</span>
+
+
+    <input type="hidden" name="id" th:field="*{id}">
+
+    <div class="form-group">
+        <label for="name">Name</label>
+
+        <input type="text"  class="form-control"  th:field="*{name}"/>
+        <!--<span th:text="${#fields.hasErrors('name')}">XXX</span>-->
+        <span class="validationError"
+              th:if="${#fields.hasErrors('name')}"
+              th:errors="*{name}">Name Error</span>
+        <br/>
+
+    </div>
+    <div class="form-group">
+
+        <label for="Url">Url</label>
+        <input type="text"  class="form-control"  th:field="*{url}"/>
+        <!--<span th:text="${#fields.hasErrors('url')}">XXX</span>-->
+        <span class="validationError"
+              th:if="${#fields.hasErrors('url')}"
+              th:errors="*{url}">URL Error</span>
+        <br/>
+
+    </div>
+    <div class="form-group">
+
+        <label for="type">type</label>
+        <select th:field="*{type}">
+            <option th:each="type : ${types}"
+                    th:value="${type}"
+                    th:text="${type}">
+            </option>
+        </select>
+        <br/>
+
+    </div>
+    <div th:each="label : ${labels}" class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" th:field="*{labels}" th:id="${label.id}" th:value="${label.id}" th:checked="${true}">
+        <label class="custom-control-label" th:for="${label.id}" th:text="${label.name}" >...</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

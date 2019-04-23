@@ -1,0 +1,17 @@
+
+.card {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.14) !important;
+}
+
+.card-header {
+    background-color: #343a40e6 !important;
+}
+
+.card-header a {
+    color: white;
+}
+
+.card-header a:hover {
+    color: ghostwhite;
+    font-weight: bold;
+}
