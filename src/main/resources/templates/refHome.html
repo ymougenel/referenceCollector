@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reference Collector</title>
+    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
+    <link th:href="@{../style/header.css}" rel="stylesheet">
+    <link th:href="@{../style/list_light.css}" rel="stylesheet">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a th:href="@{/references}"><img class="logo navbar-brand" th:src="@{/images/logo.png}"/></a>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/references}">References</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/labels}">Labels</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
+    </li>
+
+</nav>
+<br/>
+<form method="GET" th:action="@{/references}" class="form-inline" style="justify-content: center">
+    <div class="form-group">
+        <select name="filterBy">
+            <option value="labels">LABEL</option>
+            <option value="name">NAME</option>
+            <option value="url">URL</option>
+        </select>
+        <br/>
+
+    </div>
+    <input type="text" id="filter" name="filter" class="form-control mx-sm-3" th:value="${filter}"/>
+
+    <button type="submit" class="btn btn-primary fas fa-search search-icon"></button>
+</form>
+
+<br/>
+<div style="display: flex; flex-wrap: wrap;">
+    <div th:each="reference : ${page.iterator()}" class="card" style="width: 25rem; margin: 15px ">
+        <div class="card-header" style="display: flex; flex-wrap: wrap; justify-content: space-between">
+            <a th:href="${reference.url}" th:text="${reference.name}"></a>
+            <span>
+                <a th:href="@{/references/edit(id=${reference.id})}"><i class="far fa-edit"></i></a>
+                <a th:href="@{/references/delete(id=${reference.id})}"><i class="far fa-trash-alt"></i></a>
+            </span>
+        </div>
+        <div class="card-body">
+            <span class="badge label-blue" th:each="label : ${reference.labels}" th:text="${label.name }"> </span>
+        </div>
+    </div>
+
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item" th:classappend="${page.number == 0} ? disabled">
+            <a class="page-link"
+               th:href="@{/references(size=${page.size}, page=${page.number-1}, filter=${filter}, filterBy=${filterBy}, orderBy=${orderBy}, direction=${direction})}"
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <li th:each="pageNumber : ${pageNumbers}" class="page-item"
+            th:classappend="${pageNumber==page.number + 1} ? active">
+            <a class="page-link"
+               th:href="@{/references(size=${page.size}, page=${pageNumber-1}, filter=${filter}, filterBy=${filterBy}, orderBy=${orderBy}, direction=${direction})}"
+               th:text=${pageNumber}>
+            </a>
+        </li>
+        <li class="page-item" th:classappend="${page.totalPages == page.number +1} ? disabled">
+            <a class="page-link"
+               th:href="@{/references(size=${page.size}, page=${page.number+1}, filter=${filter}, filterBy=${filterBy}, orderBy=${orderBy}, direction=${direction})}"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<br/>
+<a class="btn btn-primary" th:href="@{/references/new}" id="create">New reference</a>
+
+<script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

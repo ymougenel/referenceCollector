@@ -67,7 +67,7 @@ class References {
     @GetMapping
     fun paginate(model: Model,
                  @RequestParam("page", required = false, defaultValue = "0") page: Int,
-                 @RequestParam("size", required = false, defaultValue = "5") size: Int,
+                 @RequestParam("size", required = false, defaultValue = "16") size: Int,
                  @RequestParam("direction", required = false, defaultValue = "ASC") direction: String,
                  @RequestParam("orderBy", required = false, defaultValue = "id") orderBy: String,
                  @RequestParam("filterBy", required = false, defaultValue = "") filterBy: String,
@@ -83,7 +83,7 @@ class References {
         model.addAttribute("filter", filter)
         model.addAttribute("orderBy", orderBy)
         model.addAttribute("direction", direction)
-        return "refList"
+        return "refHome"
     }
 
 
