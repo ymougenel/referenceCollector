@@ -1,0 +1,25 @@
+
+.labels-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.label {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    margin: 10px;
+    margin-bottom: 0px;
+    font-weight: bold;
+    font-size: 0.9em
+
+}
+
+.icons-container {
+    display: flex;
+    justify-content: center;
+}
+
+i {
+    margin-left: 1px;
+    margin-right: 1px;
+}

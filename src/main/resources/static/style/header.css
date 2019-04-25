@@ -4,7 +4,8 @@
 }
 
 .nav-link  {
-    color: #d9dce0
+    color: #d9dce0;
+    font-size: 1.2em;
 }
 
 .nav-link:hover {
