@@ -3,14 +3,12 @@ package com.ymougenel.referenceCollector.controller
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
@@ -34,32 +32,35 @@ class Profile {
     @GetMapping(path = arrayOf("importExport"))
     fun importExport() = "import_export";
 
-
-    @GetMapping(path = arrayOf("/importReferences"))
-    fun importReferences(model: Model): String {
-        model.addAttribute("reference", Reference())
-        model.addAttribute("types", ReferenceType.values())
-        return "refForm"
-    }
-
-
+    // TODO refactor & optimize
     @PostMapping(path = arrayOf("/importReferences"))
-    fun handleFileU463e1adb4748pload(@RequestParam("file") file: MultipartFile,
+    fun handleFileUpload(@RequestParam("file") file: MultipartFile,
                          redirectAttributes: RedirectAttributes): String {
         val references = mapper.readValue<List<Reference>>(file.inputStream)
+
+        val currentLabelsNames = labelDAO.findAll()
+                .map { label -> label.name }
+                .toList()
 
         // Persist all label (only once)
         references
                 .flatMap { it.labels!!.asIterable() }
                 .toSet()
-                .forEach { labelDAO.save(it) }
+                .stream()
+                .filter { !currentLabelsNames.contains(it.name) }
+                .forEach { it.id = 0; labelDAO.save(it) }
 
 
-        // Update reference ids
-        for (ref in references)
-            for (lab in ref.labels!!)
-                lab.id = labelDAO.findByName(lab.name).id
-        referencesDao.saveAll(references)
+        for (reference in references) {
+            if (referencesDao.findReferenceByNameContaining(reference.name!!).isEmpty()) {
+
+                for (lab in reference.labels!!) {
+                    lab.id = labelDAO.findByName(lab.name).id
+                }
+                referencesDao.save(reference)
+
+            }
+        }
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
