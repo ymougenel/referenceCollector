@@ -20,7 +20,18 @@ pipeline {
                 environment name: 'env', value: 'dev'
             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
+                /*script {
+                    sh 'mvn clean package dockerfile:build'
+                }
+                */script {
+                    docker.withRegistry('', 'dockerhub-credentials') {
+
+                         docker.image("slonepi/reference-collector:latest").push()
+                    }
+               }
+               /*step("Deploy application") {
+                  ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
+               }*/
             }
         }
         stage("Deploy Prod") {
