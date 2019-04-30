@@ -1,3 +1,4 @@
+# This file is an example: the host and variables should be changed
 all:
   hosts:
     server:
@@ -5,4 +6,7 @@ all:
 
   vars:
     ansible_user: centos
-    workspace: /home/centos/referenceCollector
+    DB_NAME: "reference_collector"
+    DB_PORT: "5432"
+    DB_USER: "dbuser"
+    DB_PWD: "changeMe"
