@@ -2,16 +2,15 @@
 
 <img src="./.README/logo.png" alt="logo" width="200"/>
 
-Saves references (article, video) links.
+Helps you gather, store and share references links.
 # Use it
 
 ## Requirements
 * docker
 * docker-compose
-* maven
+
 ## Launch the application
-* Get the application: `git clone git@github.com:ymougenel/referenceCollector.git`
-* Compile it & generate the docker image: `mvn clean package dockerfile:build`
+* Get the docker file: `curl https://raw.githubusercontent.com/ymougenel/referenceCollector/master/docker-compose.yml > docker-compose.yml`
 * Run the application: `docker-compose up`
 > Your application is now available: [http://localhost:8092/references](http://localhost:8092/references)
 
@@ -36,3 +35,8 @@ Run the generated jar
 ```shell
 java -Dspring.profiles.active=dev -jar target/referenceCollector-X.X.X.jar
 ```
+
+
+# License
+
+The project is under open-source [LICENSE](LICENSE), it therefore complies to all the terms related to [the open-source philosophy](https://en.wikipedia.org/wiki/The_Open_Source_Definition).

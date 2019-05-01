@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ymougenel</groupId>
     <artifactId>referenceCollector</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <name>referenceCollector</name>
     <description>Reference Collector</description>
 
@@ -129,6 +129,7 @@
                 <version>1.3.6</version>
                 <configuration>
                     <repository>slonepi/reference-collector</repository>
+                    <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
