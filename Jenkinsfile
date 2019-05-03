@@ -15,6 +15,18 @@ pipeline {
               }
             }
         }
+       stage("Publish image") {
+           steps {
+               script {
+                  sh 'mvn clean package dockerfile:build'
+               }
+                script {
+                  docker.withRegistry('', 'dockerhub-credentials') {
+                        docker.image("slonepi/reference-collector:latest").push()
+                  }
+                }
+           }
+       }
         stage("Deploy Dev") {
             when {
                 environment name: 'env', value: 'dev'
