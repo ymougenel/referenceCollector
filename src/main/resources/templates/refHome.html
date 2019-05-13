@@ -12,7 +12,10 @@
 <body>
 <header th:insert="fragments/general.html :: header"> </header>
 
-<form method="GET" th:action="@{/references}" class="form-inline" style="justify-content: center">
+<div style="display: flex;">
+    <a th:href="@{/references/new}" id="create" class="plus-button" ><i class="fas fa-plus-circle fa-3x"></i></a>
+
+    <form method="GET" th:action="@{/references}" class="form-inline" style="margin: 0 auto;">
     <div class="form-group">
         <select name="filterBy">
             <option value="labels">LABEL</option>
@@ -26,11 +29,12 @@
 
     <button type="submit" class="btn btn-primary fas fa-search search-icon"></button>
 </form>
+</div>
 
 <br/>
 <div style="display: flex; flex-wrap: wrap;">
     <div th:each="reference : ${page.iterator()}" class="card" style="width: 25rem; margin: 15px ">
-        <div class="card-header" style="display: flex; flex-wrap: wrap; justify-content: space-between">
+        <div class="card-header">
             <a th:href="${reference.url}" th:text="${reference.name}"></a>
             <span>
                 <a th:href="@{/references/edit(id=${reference.id})}"><i class="far fa-edit"></i></a>
@@ -38,7 +42,8 @@
             </span>
         </div>
         <div class="card-body">
-            <span class="badge label-blue" th:each="label : ${reference.labels}" th:text="${label.name }"> </span>
+            <a  th:each="label : ${reference.labels}" th:href="@{/references(filterBy='labels',filter=${label.name})}"
+                class="badge label-blue" th:text="${label.name}"></a>
         </div>
     </div>
 
@@ -73,7 +78,6 @@
 </nav>
 
 <br/>
-<a class="btn btn-primary" th:href="@{/references/new}" id="create">New reference</a>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 

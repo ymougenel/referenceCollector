@@ -3,8 +3,19 @@
     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.14) !important;
 }
 
+.plus-button {
+    color: #74b2f2;
+    margin-left: 15px;
+}
+
+.plus-button:hover {
+    color: #4884f2;
+}
 .card-header {
-    background-color: rgba(144, 116, 93, 0.23)
+    background-color: rgba(144, 116, 93, 0.23);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .card-header a {
@@ -29,5 +40,6 @@
 .label-blue {
     background-color: #cce5ff;
     border-color: #b8daff;
+    color: #212529;
     margin-right: 6px;
 }

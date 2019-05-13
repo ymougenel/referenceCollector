@@ -55,8 +55,10 @@ class References {
     }
 
     @PostMapping
-    fun postRef(@Valid reference: Reference, errors: Errors): String {
+    fun postRef(@Valid reference: Reference, errors: Errors, model: Model): String {
         if (errors.hasErrors()) {
+            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            model.addAttribute("types", ReferenceType.values())
             return "refForm"
         }
 
