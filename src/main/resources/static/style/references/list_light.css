@@ -1,16 +1,25 @@
 
 .card {
     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.14) !important;
+    width: 25rem;
+    margin: 15px;
 }
 
 .plus-button {
     color: #74b2f2;
-    margin-left: 15px;
+    margin-left: 105px;
 }
 
 .plus-button:hover {
     color: #4884f2;
 }
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .card-header {
     background-color: rgba(144, 116, 93, 0.23);
     display: flex;
@@ -42,4 +51,13 @@
     border-color: #b8daff;
     color: #212529;
     margin-right: 6px;
+}
+
+.page-link:active {
+    background-color: #b8daff;
+}
+
+.nav-pagination {
+    display: flex;
+    justify-content: center;
 }
