@@ -129,7 +129,7 @@
                 <version>1.3.6</version>
                 <configuration>
                     <repository>slonepi/reference-collector</repository>
-                    <tag>${project.version}</tag>
+                    <!--<tag>${project.version}</tag>-->
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>

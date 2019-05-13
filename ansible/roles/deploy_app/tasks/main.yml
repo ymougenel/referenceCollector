@@ -7,11 +7,11 @@
     image: postgres:11.1
     state: started
     ports:
-      - "{{ DB_PORT }}:{{ DB_PORT }}"
+      - "{{ RC_DB_PORT }}:{{ DB_PORT }}"
     env:
       POSTGRES_USER: "{{ DB_USER }}"
-      POSTGRES_PASSWORD: "{{ DB_PWD }}"
-      POSTGRES_DB: "{{ DB_NAME }}"
+      POSTGRES_PASSWORD: "{{ RC_DB_PWD }}"
+      POSTGRES_DB: "{{ RC_DB_NAME }}"
 
 - name: Launch RC app
   docker_container:
@@ -25,10 +25,8 @@
     env:
       DATABASE_HOST: "rc-database"
       DATABASE_USER: "{{ DB_USER }}"
-      DATABASE_PASSWORD: "{{ DB_PWD }}"
-      DATABASE_NAME: "{{ DB_NAME }}"
+      DATABASE_PASSWORD: "{{ RC_DB_PWD }}"
+      DATABASE_NAME: "{{ RC_DB_NAME }}"
       DATABASE_PORT: "{{ DB_PORT }}"
     links:
       - rc-database
-
-

@@ -20,8 +20,8 @@ Run a postgres database:
 ```shell
 docker run \
     -p 5432:5432 \
-    -e POSTGRES_USER=dev \
-    -e POSTGRES_PASSWORD=dev \
+    -e POSTGRES_USER=dbuser \
+    -e POSTGRES_PASSWORD=dbp4ss \
     -e POSTGRES_DB=reference_collector postgres:11.1
 
 ```
