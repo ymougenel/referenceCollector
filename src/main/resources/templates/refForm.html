@@ -4,6 +4,7 @@
 <head>
     <title>Reference Collector</title>
     <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
     <link th:href="@{../style/header.css}" rel="stylesheet">
     <link th:href="@{../style/references/form.css}" rel="stylesheet">
 
@@ -51,11 +52,20 @@
             <br/>
 
         </div>
+
         <div class="labels-container">
+            <label for="labels">Labels</label>
             <div th:each="label : ${labels}" class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" th:field="*{labels}" th:id="${label.id}"
                        th:value="${label.id}" th:checked="${true}">
                 <label class="custom-control-label" th:for="${label.id}" th:text="${label.name}">...</label>
+            </div>
+            <span id="insertHere"></span>
+            <div class="custom-control custom-checkbox">
+                <br />
+                <input type="checkbox" class="custom-control-input" id="newLabel" value="" disabled>
+                <label class="custom-control-label" ><input type="text" id="label_name_input" size="8" value="" placeholder="New Label"/></label>
+                    <a href="#" id="create_label" class="plus-button" onclick="$.fn.add_label();"><i class="fas fa-plus-circle"></i></a>
             </div>
         </div>
 
@@ -65,5 +75,7 @@
 </div>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script th:src="@{../webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script th:src="@{../js/references-form.js}"></script>
 </body>
 </html>
