@@ -18,7 +18,7 @@
     </div>
     <div class="labels-container">
         <div th:each="label : ${labels}">
-            <a th:href="@{/references(filterBy='labels',filter=${label.name})}"
+            <a th:href="@{/templates/references(filterBy='labels',filter=${label.name})}"
                class="badge label" th:text="${label.name}"></a>
             <span class="icons-container">
             <a th:href="@{/labels/(id=${label.id})}"><i class="fa fa-edit fa-xs"></i></a>
@@ -30,7 +30,7 @@
 
     <br/>
     <hr/>
-    <form method="POST" th:action="@{/labels}" th:object="${label}" class="was-validated">
+    <form method="POST" th:action="@{/templates/labels}" th:object="${label}" class="was-validated">
         <h2 th:if="${label.id == 0}">Add Label</h2>
 
         <h2 th:if="${label.id != 0}">Edit Label</h2>
@@ -38,7 +38,7 @@
             <label for="name">Name</label>
 
             <input type="hidden" name="id" th:field="*{id}">
-            <input type="text" id="name" name="name" class="form-control" th:value="*{name}"/>
+            <input type="text" id="name" name="name" class="form-control col-md-6" th:value="*{name}"/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

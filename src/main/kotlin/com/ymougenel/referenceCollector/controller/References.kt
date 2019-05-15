@@ -36,7 +36,7 @@ class References {
         model.addAttribute("reference", Reference())
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
         model.addAttribute("types", ReferenceType.values())
-        return "refForm"
+        return "references/form"
     }
 
     @GetMapping(path = arrayOf("/edit"))
@@ -44,7 +44,7 @@ class References {
         model.addAttribute("reference", referenceService.findById(id))
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
         model.addAttribute("types", ReferenceType.values())
-        return "refForm"
+        return "references/form"
     }
 
     // TODO: change me to deleteMapping
@@ -59,7 +59,7 @@ class References {
         if (errors.hasErrors()) {
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
             model.addAttribute("types", ReferenceType.values())
-            return "refForm"
+            return "references/form"
         }
 
         referenceService.save(reference);
@@ -85,7 +85,7 @@ class References {
         model.addAttribute("filter", filter)
         model.addAttribute("orderBy", orderBy)
         model.addAttribute("direction", direction)
-        return "refHome"
+        return "references/list"
     }
 
 

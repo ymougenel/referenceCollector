@@ -1,7 +1,6 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Label
-import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -34,7 +33,7 @@ class LabelController {
 
         model.addAttribute("label",label)
         model.addAttribute("mode", mode)
-        return "label_list"
+        return "labels/list"
     }
 
     @PostMapping
