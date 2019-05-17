@@ -4,6 +4,7 @@ import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.service.ReferenceService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -20,8 +21,10 @@ import java.util.stream.IntStream
 @Controller
 @RequestMapping("/references")
 class References {
-    private lateinit var referenceService: ReferenceService
-    private lateinit var labelDAO: LabelDAO
+
+    var logger = LoggerFactory.getLogger(References::class.java)
+    private var referenceService: ReferenceService
+    private var labelDAO: LabelDAO
 
     private var PAGINATION_RANGE = 3
 
@@ -50,6 +53,7 @@ class References {
     // TODO: change me to deleteMapping
     @GetMapping(path = arrayOf("/delete"))
     fun deleteRef(model: Model, @RequestParam("id") id: Long): String {
+        logger.info("DeleteReference id=" + id)
         referenceService.deleteById(id)
         return "redirect:/references"
     }
@@ -57,6 +61,7 @@ class References {
     @PostMapping
     fun postRef(@Valid reference: Reference, errors: Errors, model: Model): String {
         if (errors.hasErrors()) {
+            logger.info("PostReference errors: " + reference)
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
             model.addAttribute("types", ReferenceType.values())
             return "references/form"

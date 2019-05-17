@@ -30,7 +30,7 @@
 
     <br/>
     <hr/>
-    <form method="POST" th:action="@{/templates/labels}" th:object="${label}" class="was-validated">
+    <form method="POST" th:action="@{/labels}" th:object="${label}" class="was-validated">
         <h2 th:if="${label.id == 0}">Add Label</h2>
 
         <h2 th:if="${label.id != 0}">Edit Label</h2>
