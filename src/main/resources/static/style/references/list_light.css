@@ -53,9 +53,13 @@
     margin-right: 6px;
 }
 
-.page-link:active {
-    background-color: #b8daff;
-}
+/*.page-item.active .page-link {*/
+    /*background-color: #b8daff;*/
+/*}*/
+
+/*.page-item.active:hover {*/
+    /*background-color: #4884f2;;*/
+/*}*/
 
 .nav-pagination {
     display: flex;
