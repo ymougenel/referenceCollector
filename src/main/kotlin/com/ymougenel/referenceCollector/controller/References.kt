@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
+import java.lang.IllegalArgumentException
 import javax.validation.Valid
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -83,7 +84,13 @@ class References {
 
 
         val pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(direction), orderBy)
-        val references: Page<Reference> = referenceService.findFromFilter(pageRequest, filterBy, filter, orderBy)
+        var references: Page<Reference>
+        try {
+            references = referenceService.findFromFilter(pageRequest, filterBy, filter, orderBy)
+
+        } catch (e: IllegalArgumentException) {
+            references = Page.empty(pageRequest)
+        }
 
         handlePagination(model, references, direction)
         model.addAttribute("filterBy", filterBy)

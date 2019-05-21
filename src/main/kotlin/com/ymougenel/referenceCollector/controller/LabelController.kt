@@ -39,12 +39,11 @@ class LabelController {
     }
 
     @PostMapping
-    fun updateLabel(@Valid label: Label, errors: Errors): String {
-        //TODO form mapping
+    fun updateLabel(@Valid label: Label, errors: Errors, model: Model): String {
         if (errors.hasErrors()) {
             logger.info("Error with labelUpdate" + errors.allErrors)
-            //TODO error
-            return "redirect:/labels"
+            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            return "labels/list"
         }
         labelDAO.save(label)
         return "redirect:/labels"
