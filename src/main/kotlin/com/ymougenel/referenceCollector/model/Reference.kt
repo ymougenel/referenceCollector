@@ -8,12 +8,16 @@ import javax.validation.constraints.NotBlank
 data class Reference(
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Id
-        var id: Long?,
+        var id: Long,
         @get:URL
         var url: String?,
         @get:NotBlank(message = "Name is required")
         var name: String?,
         @ManyToMany
+        @JoinTable(name = "label_reference",
+                joinColumns = arrayOf(JoinColumn(name = "reference_id")),
+                inverseJoinColumns = arrayOf(JoinColumn(name = "label_id"))
+        )
         var labels: List<Label>?,
         var type: ReferenceType?) {
     constructor() : this(0L, "", "", null, null)
