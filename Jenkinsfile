@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-      MAVEN_IMAGE = 'maven:3.5-jdk-8'
+      MAVEN_IMAGE = 'maven:3.6.1-jdk-8'
     }
     
     stages {
@@ -10,7 +10,7 @@ pipeline {
             steps {
               script {
                   docker.image(MAVEN_IMAGE).inside('-v /var/lib/jenkins/.m2:/root/.m2') {
-                      sh 'mvn test'
+                      sh 'mvn -v test'
                   }
               }
             }
