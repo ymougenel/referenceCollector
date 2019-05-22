@@ -17,7 +17,7 @@
   docker_container:
     name: rc-app
     pull: yes
-    image: slonepi/reference-collector:latest
+    image: "slonepi/reference-collector:{{ RC_APP_VERSION }}"
     state: started
     restart: yes
     ports:

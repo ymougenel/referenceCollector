@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ymougenel</groupId>
     <artifactId>referenceCollector</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>referenceCollector</name>
     <description>Reference Collector</description>
 

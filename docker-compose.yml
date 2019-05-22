@@ -12,7 +12,7 @@ services:
     ports:
       - "5432:5432"
   rc-back:
-    image: slonepi/reference-collector
+    image: slonepi/reference-collector:1.0.0
     container_name: rc-app
     depends_on:
       - rc-database
