@@ -6,7 +6,7 @@ pipeline {
     }
     
     stages {
-        stage("Test") {
+        /*stage("Test") {
             steps {
               script {
                   docker.image(MAVEN_IMAGE).inside('-v /var/lib/jenkins/.m2:/root/.m2') {
@@ -26,18 +26,19 @@ pipeline {
                   }
                 }
            }
-       }
+       }*/
         stage("Deploy Dev") {
             when {
-                environment name: 'env', value: 'dev'
+                branch 'develop'
             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
+              sh echo "branch triggered"
+              //ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
             }
         }
         stage("Deploy Prod") {
             when {
-                environment name: 'env', value: 'prod'
+                branch 'master'
             }
             steps {
               ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/prod.yml', playbook: 'ansible/playbook.yml')
