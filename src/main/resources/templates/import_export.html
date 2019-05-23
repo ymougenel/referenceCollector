@@ -9,7 +9,7 @@
 
 <body>
 <header th:insert="fragments/general.html :: header"> </header>
-
+<div class="page">
 <h2>Import references</h2>
 <form method="POST" enctype="multipart/form-data" th:action="@{/profile/importReferences}">
     <table>
@@ -23,7 +23,7 @@
 
 <a th:href="@{/profile/exportReferences}">Export</a>
 
-
+</div>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 

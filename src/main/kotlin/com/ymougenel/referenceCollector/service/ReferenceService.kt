@@ -3,16 +3,21 @@ package com.ymougenel.referenceCollector.service
 import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 import java.util.*
 
 @Service
 class ReferenceService {
+
+    var logger = LoggerFactory.getLogger(ReferenceService::class.java)
+
     private val referencesDao: ReferenceDAO
 
     private val labelDao: LabelDAO
@@ -43,9 +48,8 @@ class ReferenceService {
                 val label = labelDao.findByName(filter)
                 references = referencesDao.findReferenceBylabelsContaining(label, pageRequest)
             } catch (e: EmptyResultDataAccessException) {
-                //TODO log
-                //TODO warn not found
-                references = referencesDao.findAll(pageRequest)
+                logger.error("Error while finding label from filter: " + e.message)
+                throw IllegalArgumentException("No label matching: " + filter)
             }
         }
         return references

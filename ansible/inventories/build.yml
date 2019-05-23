@@ -6,7 +6,9 @@ all:
 
   vars:
     ansible_user: centos
-    DB_NAME: "reference_collector"
+    RC_DB_NAME: "reference_collector"
+    RC_DB_PORT: "5432"
     DB_PORT: "5432"
     DB_USER: "dbuser"
-    DB_PWD: "changeMe"
+    RC_DB_PWD: "changeMe"
+    RC_APP_VERSION: "0.1.0"

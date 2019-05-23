@@ -7,6 +7,7 @@
 .label {
     background-color: #cce5ff;
     border-color: #b8daff;
+    color: #212529;
     margin: 10px;
     margin-bottom: 0px;
     font-weight: bold;
@@ -22,4 +23,8 @@
 i {
     margin-left: 1px;
     margin-right: 1px;
+}
+
+.btn-primary {
+    background-color: #74b2f2;
 }

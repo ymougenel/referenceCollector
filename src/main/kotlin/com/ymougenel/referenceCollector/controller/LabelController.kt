@@ -1,8 +1,8 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Label
-import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.persistence.LabelDAO
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -14,7 +14,8 @@ import javax.validation.Valid
 @RequestMapping("/labels")
 class LabelController {
 
-    private lateinit var labelDAO: LabelDAO
+    private var labelDAO: LabelDAO
+    var logger = LoggerFactory.getLogger(LabelController::class.java)
 
     @Autowired
     constructor(labelDAO: LabelDAO) {
@@ -24,25 +25,25 @@ class LabelController {
 
     @GetMapping
     fun getLabels(model: Model,
-                 @RequestParam("mode", required = false, defaultValue = "list") mode: String,
-                 @RequestParam("id", required = false, defaultValue = "0") id: Long): String {
+                  @RequestParam("id", required = false, defaultValue = "0") id: Long): String {
+
+        logger.info("Getting labels: id=" + id)
 
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
 
         // Retrieve label or create new one
-        val label: Label = if (id!=0L) labelDAO.findById(id).get() else Label()
+        val label: Label = if (id != 0L) labelDAO.findById(id).get() else Label()
 
-        model.addAttribute("label",label)
-        model.addAttribute("mode", mode)
-        return "label_list"
+        model.addAttribute("label", label)
+        return "labels/list"
     }
 
     @PostMapping
-    fun updateLabel(@Valid label: Label, errors: Errors): String {
-        //TODO form mapping
-        if(errors.hasErrors()) {
-            //TODO error
-            return "redirect:/labels"
+    fun updateLabel(@Valid label: Label, errors: Errors, model: Model): String {
+        if (errors.hasErrors()) {
+            logger.info("Error with labelUpdate" + errors.allErrors)
+            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            return "labels/list"
         }
         labelDAO.save(label)
         return "redirect:/labels"
@@ -50,6 +51,7 @@ class LabelController {
 
     @GetMapping("/delete")
     fun deleteLabel(model: Model, @RequestParam("id") id: Long): String {
+        logger.info("Deleting label: " + id)
         labelDAO.deleteById(id)
         return "redirect:/labels"
     }

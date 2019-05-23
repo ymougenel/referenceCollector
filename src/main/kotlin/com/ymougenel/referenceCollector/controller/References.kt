@@ -4,6 +4,7 @@ import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.service.ReferenceService
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
+import java.lang.IllegalArgumentException
 import javax.validation.Valid
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -20,8 +22,10 @@ import java.util.stream.IntStream
 @Controller
 @RequestMapping("/references")
 class References {
-    private lateinit var referenceService: ReferenceService
-    private lateinit var labelDAO: LabelDAO
+
+    var logger = LoggerFactory.getLogger(References::class.java)
+    private var referenceService: ReferenceService
+    private var labelDAO: LabelDAO
 
     private var PAGINATION_RANGE = 3
 
@@ -36,7 +40,7 @@ class References {
         model.addAttribute("reference", Reference())
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
         model.addAttribute("types", ReferenceType.values())
-        return "refForm"
+        return "references/form"
     }
 
     @GetMapping(path = arrayOf("/edit"))
@@ -44,20 +48,24 @@ class References {
         model.addAttribute("reference", referenceService.findById(id))
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
         model.addAttribute("types", ReferenceType.values())
-        return "refForm"
+        return "references/form"
     }
 
     // TODO: change me to deleteMapping
     @GetMapping(path = arrayOf("/delete"))
     fun deleteRef(model: Model, @RequestParam("id") id: Long): String {
+        logger.info("DeleteReference id=" + id)
         referenceService.deleteById(id)
         return "redirect:/references"
     }
 
     @PostMapping
-    fun postRef(@Valid reference: Reference, errors: Errors): String {
+    fun postRef(@Valid reference: Reference, errors: Errors, model: Model): String {
         if (errors.hasErrors()) {
-            return "refForm"
+            logger.info("PostReference errors: " + reference)
+            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            model.addAttribute("types", ReferenceType.values())
+            return "references/form"
         }
 
         referenceService.save(reference);
@@ -76,14 +84,20 @@ class References {
 
 
         val pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(direction), orderBy)
-        val references: Page<Reference> = referenceService.findFromFilter(pageRequest, filterBy, filter, orderBy)
+        var references: Page<Reference>
+        try {
+            references = referenceService.findFromFilter(pageRequest, filterBy, filter, orderBy)
+
+        } catch (e: IllegalArgumentException) {
+            references = Page.empty(pageRequest)
+        }
 
         handlePagination(model, references, direction)
         model.addAttribute("filterBy", filterBy)
         model.addAttribute("filter", filter)
         model.addAttribute("orderBy", orderBy)
         model.addAttribute("direction", direction)
-        return "refHome"
+        return "references/list"
     }
 
 

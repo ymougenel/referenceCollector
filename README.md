@@ -14,14 +14,14 @@ Helps you gather, store and share references links.
 * Run the application: `docker-compose up`
 > Your application is now available: [http://localhost:8092/references](http://localhost:8092/references)
 
-# Development
+## Development
 
 Run a postgres database:
 ```shell
 docker run \
     -p 5432:5432 \
-    -e POSTGRES_USER=dev \
-    -e POSTGRES_PASSWORD=dev \
+    -e POSTGRES_USER=dbuser \
+    -e POSTGRES_PASSWORD=dbp4ss \
     -e POSTGRES_DB=reference_collector postgres:11.1
 
 ```
@@ -36,6 +36,12 @@ Run the generated jar
 java -Dspring.profiles.active=dev -jar target/referenceCollector-X.X.X.jar
 ```
 
+## Deploy with Ansible
+
+Configure the inventory file and launch ansible:
+```
+ansible-playbook -i ansible/inventories/build.yml ansible/playbook.yml
+```
 
 # License
 

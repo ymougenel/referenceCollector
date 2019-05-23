@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
@@ -15,13 +16,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.File
 import javax.servlet.http.HttpServletResponse
 
-
+/**
+ * Import/Export references
+ * TODO change all implementation: json -> csv
+ */
 @Controller
 @RequestMapping("/profile")
 class Profile {
-    private lateinit var referencesDao: ReferenceDAO
-    private lateinit var labelDAO: LabelDAO
+    private var referencesDao: ReferenceDAO
+    private var labelDAO: LabelDAO
     private var mapper = jacksonObjectMapper()
+    var logger = LoggerFactory.getLogger(Profile::class.java)
 
     @Autowired
     constructor(referencesDAO: ReferenceDAO, labelDAO: LabelDAO) {
@@ -36,6 +41,7 @@ class Profile {
     @PostMapping(path = arrayOf("/importReferences"))
     fun handleFileUpload(@RequestParam("file") file: MultipartFile,
                          redirectAttributes: RedirectAttributes): String {
+        logger.info("Importing References")
         val references = mapper.readValue<List<Reference>>(file.inputStream)
 
         val currentLabelsNames = labelDAO.findAll()
@@ -70,6 +76,7 @@ class Profile {
     @RequestMapping(value = arrayOf("/exportReferences"), produces = arrayOf("application/text"))
     @ResponseBody
     fun downloadFile(response: HttpServletResponse): Resource {
+        logger.info("Exporting references")
         val file = File("/tmp/export.json")
         val references = referencesDao.findAll()
         file.writeText(mapper.writeValueAsString(references))

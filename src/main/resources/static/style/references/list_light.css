@@ -1,0 +1,67 @@
+
+.card {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.14) !important;
+    width: 25rem;
+    margin: 15px;
+}
+
+.plus-button {
+    color: #74b2f2;
+    margin-left: 105px;
+}
+
+.plus-button:hover {
+    color: #4884f2;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-header {
+    background-color: rgba(144, 116, 93, 0.23);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-header a {
+    color: #343a40;
+}
+
+.card-header a:hover {
+    color: #343a40;
+    font-weight: bold;
+}
+
+.search-icon {
+    border-color: rgba(144, 116, 93, 0.76);
+    background-color: rgba(144, 116, 93, 0.56);
+}
+
+.search-icon:hover {
+    background-color: rgba(162, 108, 63, 0.74);
+    border-color: rgba(144, 116, 93, 0.85);
+}
+
+.label-blue {
+    background-color: #cce5ff;
+    border-color: #b8daff;
+    color: #212529;
+    margin-right: 6px;
+}
+
+/*.page-item.active .page-link {*/
+    /*background-color: #b8daff;*/
+/*}*/
+
+/*.page-item.active:hover {*/
+    /*background-color: #4884f2;;*/
+/*}*/
+
+.nav-pagination {
+    display: flex;
+    justify-content: center;
+}

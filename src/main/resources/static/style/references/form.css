@@ -1,0 +1,15 @@
+
+.labels-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 150px;
+}
+
+.btn-primary {
+    background-color: #74b2f2;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+}
