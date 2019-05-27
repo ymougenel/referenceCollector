@@ -1,0 +1,9 @@
+.export-container {
+    display: inline-flex;
+}
+
+.icon-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}

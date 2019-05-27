@@ -32,7 +32,7 @@ class ImportExportTest {
     val labels: List<Label> = listOf(Label(0, "lab1", null), Label(0, "lab2", null))
     val ref1 = Reference(0, "https://github.com/", "ref1", listOf(labels.get(0)), ReferenceType.ARTICLE)
     val ref2 = Reference(0, "https://en.wikipedia.org/wiki/Alan_Turing", "ref2", listOf(labels.get(0), labels.get(1)), ReferenceType.ARTICLE)
-    val ref3 = Reference(0, "", "ref3", null, ReferenceType.ARTICLE)
+    val ref3 = Reference(0, "", "ref3", ArrayList(), ReferenceType.ARTICLE)
 
     @Before
     fun clean() {
@@ -53,12 +53,12 @@ class ImportExportTest {
     fun testImportExport() {
 
 
-        val exportOutput = importExportService.exportReferences()
+        val exportOutput = importExportService.exportReferencesCSV()
         labelDAO.deleteAll()
         referenceDAO.deleteAll()
 
         // Save all the references/labels based from the previous exportation
-        importExportService.importReferences(ByteArrayInputStream(exportOutput.toByteArray()))
+        importExportService.importReferencesCSV(ByteArrayInputStream(exportOutput.toByteArray()))
 
         // Assert the labels have been imported
         assertNotNull(labelDAO.findByName("lab1"))
@@ -81,17 +81,17 @@ class ImportExportTest {
         // Check first reference (name, url and labels)
         assertEquals(ref1.name, r1.name)
         assertEquals(ref1.url, r1.url)
-        assert(r1.labels!!.stream().anyMatch { hasName(it, "lab1") })
-        assertEquals(1, r1.labels!!.size)
+        assert(r1.labels.stream().anyMatch { hasName(it, "lab1") })
+        assertEquals(1, r1.labels.size)
 
         assertEquals(ref2.name, r2.name)
         assertEquals(ref2.url, r2.url)
-        assert(r2.labels!!.stream().anyMatch { hasName(it, "lab1") })
-        assert(r2.labels!!.stream().anyMatch { hasName(it, "lab2") })
-        assertEquals(2, r2.labels!!.size)
+        assert(r2.labels.stream().anyMatch { hasName(it, "lab1") })
+        assert(r2.labels.stream().anyMatch { hasName(it, "lab2") })
+        assertEquals(2, r2.labels.size)
 
         assertEquals(ref3.name, r3.name)
-        assert(r3.labels!!.isEmpty())
+        assert(r3.labels.isEmpty())
         assertEquals(ref3.url, r3.url)
 
     }
@@ -108,17 +108,17 @@ class ImportExportTest {
         val labelCount = labelDAO.count()
         val referencesCount = referenceDAO.count()
 
-        val exportOutput = importExportService.exportReferences()
+        val exportOutput = importExportService.exportReferencesCSV()
         labelDAO.deleteAll()
         referenceDAO.deleteAll()
 
         // Save all the references/labels based from the previous exportation
-        importExportService.importReferences(ByteArrayInputStream(exportOutput.toByteArray()))
+        importExportService.importReferencesCSV(ByteArrayInputStream(exportOutput.toByteArray()))
 
         assertEquals(labelCount, labelDAO.count())
         assertEquals(referencesCount, referenceDAO.count())
 
-        importExportService.importReferences(ByteArrayInputStream(exportOutput.toByteArray()))
+        importExportService.importReferencesCSV(ByteArrayInputStream(exportOutput.toByteArray()))
 
         assertEquals(labelCount, labelDAO.count())
         assertEquals(referencesCount, referenceDAO.count())
