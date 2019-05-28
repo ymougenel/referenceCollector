@@ -23,7 +23,7 @@
         <div class="form-group">
 
             <label for="Url">Url</label>
-            <input type="text" class="form-control col-md-6" th:field="*{url}"/>
+            <input type="text" id="url_input" class="form-control col-md-6" th:field="*{url}"/>
             <span class="validationError"
                   th:if="${#fields.hasErrors('url')}"
                   th:errors="*{url}">URL Error</span>
@@ -33,7 +33,7 @@
         <div class="form-group">
             <label for="name">Name</label>
 
-            <input type="text" class="form-control col-md-6" th:field="*{name}"/>
+            <input type="text" id="name_input" class="form-control col-md-6" th:field="*{name}"/>
             <span class="validationError"
                   th:if="${#fields.hasErrors('name')}"
                   th:errors="*{name}">Name Error</span>
@@ -72,6 +72,7 @@
         <br/>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
 </div>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
