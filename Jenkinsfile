@@ -4,7 +4,7 @@ pipeline {
     environment {
       MAVEN_IMAGE = 'maven:3.6.1-jdk-8'
     }
-    
+
     stages {
         stage("Test") {
             steps {
@@ -16,6 +16,9 @@ pipeline {
             }
         }
        stage("Publish image") {
+           options {
+                timeout(time: 1, unit: 'HOURS')
+           }
            steps {
                script {
                   sh 'mvn clean package dockerfile:build'
