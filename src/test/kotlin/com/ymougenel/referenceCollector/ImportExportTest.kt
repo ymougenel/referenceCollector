@@ -29,7 +29,7 @@ class ImportExportTest {
     @Autowired
     internal lateinit var referenceDAO: ReferenceDAO
 
-    val labels: List<Label> = listOf(Label(0, "lab1", null), Label(0, "lab2", null))
+    val labels: List<Label> = listOf(Label(0, "lab1"), Label(0, "lab2"))
     val ref1 = Reference(0, "https://github.com/", "ref1", listOf(labels.get(0)), ReferenceType.ARTICLE)
     val ref2 = Reference(0, "https://en.wikipedia.org/wiki/Alan_Turing", "ref2", listOf(labels.get(0), labels.get(1)), ReferenceType.ARTICLE)
     val ref3 = Reference(0, "", "ref3", ArrayList(), ReferenceType.ARTICLE)

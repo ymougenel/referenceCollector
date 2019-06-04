@@ -36,14 +36,15 @@ class ImportExportService {
 
         val reader = BufferedReader(InputStreamReader(inputStream))
         reader.readLine() // Skip Header
-        for (line  in reader.readLines()) {
+        for (line in reader.readLines()) {
             var content = line.split(CSV_DELIMITER)
 
             val labels = content[3]
-                    .substring(1,content[3].length - 1) // Removes brackets
+                    .substring(1, content[3].length - 1) // Removes brackets
                     .split(",")
                     .stream()
-                    .map { it -> Label(0,it,null) }
+                    .filter { it.isNotEmpty() }
+                    .map { it -> Label(0, it) }
                     .collect(Collectors.toList())
 
             references.add(Reference(0L, content[1], content[0], labels, ReferenceType.valueOf(content[2])))
@@ -83,7 +84,7 @@ class ImportExportService {
         return mapper.writeValueAsString(references)
     }
 
-    private fun persistImportedReference(references : List<Reference>)  {
+    private fun persistImportedReference(references: List<Reference>) {
         val currentLabelsNames = labelDAO.findAll()
                 .map { label -> label.name }
                 .toList()

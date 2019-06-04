@@ -34,7 +34,7 @@ class ReferenceRepoTest {
         referenceDAO.deleteAll()
 
         // Save related reference/label
-        lab1 = Label(0, "lab1", null)
+        lab1 = Label(0, "lab1")
         ref1 = Reference(0, "", "ref1", listOf(lab1), ReferenceType.ARTICLE)
 
         lab1 = labelDAO.save(lab1)
