@@ -2,10 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Reference Collector</title>
-    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{../webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
-    <link th:href="@{../style/header.css}" rel="stylesheet">
+    <head th:insert="fragments/general.html :: headerfiles"> </head>
     <link th:href="@{../style/import_export.css}" rel="stylesheet">
 </head>
 
@@ -42,6 +39,7 @@
         </a>
     </div>
 </div>
+<footer th:insert="fragments/general.html :: footer"> </footer>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 

@@ -2,13 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Reference Collector</title>
-    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{../webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
-    <link th:href="@{../style/header.css}" rel="stylesheet">
+    <head th:insert="fragments/general.html :: headerfiles"> </head>
     <link th:href="@{../style/references/list_light.css}" rel="stylesheet">
 </head>
-
 <body>
 <header th:insert="fragments/general.html :: header"> </header>
 
@@ -78,9 +74,11 @@
 </nav>
 
 <br/>
-</body>
+<footer th:insert="fragments/general.html :: footer"> </footer>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+
 
 
 </html>
