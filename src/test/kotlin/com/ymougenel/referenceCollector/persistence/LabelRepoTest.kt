@@ -1,4 +1,4 @@
-package com.ymougenel.referenceCollector
+package com.ymougenel.referenceCollector.persistence
 
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.model.Reference
@@ -17,7 +17,7 @@ import java.util.*
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class ReferenceRepoTest {
+class LabelRepoTest {
 
     @Autowired
     internal lateinit var labelDAO: LabelDAO
@@ -45,31 +45,25 @@ class ReferenceRepoTest {
     fun basic_CRUD_test() {
 
         // Create/Retrieve
-        var ref2 = Reference(0, "", "ref2", listOf(lab1), ReferenceType.ARTICLE)
-        ref2 = referenceDAO.save(ref2)
-        assertNotNull(referenceDAO.findReferenceByNameContaining("ref2"))
+        var lab2 = Label(0, "lab2")
+        lab2 = labelDAO.save(lab2)
+        assertNotNull(labelDAO.findByName("lab2"))
 
         // Update
-        ref2.name = "updated_ref2"
-        referenceDAO.save(ref2)
-        assertEquals(ref2.name, referenceDAO.findById(ref2.id).get().name)
+        lab2.name = "updated_lab2"
+        labelDAO.save(lab2)
+        assertEquals(lab2.name, labelDAO.findById(lab2.id).get().name)
 
         // Delete
-        referenceDAO.delete(ref2)
-        assertFalse(labelDAO.findById(ref2.id).isPresent)
+        labelDAO.delete(lab2)
+        assertFalse(labelDAO.findById(lab2.id).isPresent)
 
     }
 
     @Test(expected = TransactionSystemException::class)
-    fun reference_with_name_not_empty() {
-        ref1.name = ""
-        referenceDAO.save(ref1)
-    }
-
-    @Test(expected = TransactionSystemException::class)
-    fun reference_with_valid_url() {
-        ref1.url = "Invalid url"
-        referenceDAO.save(ref1)
+    fun label_with_name_not_empty() {
+        lab1.name = ""
+        labelDAO.save(lab1)
     }
 
     /**

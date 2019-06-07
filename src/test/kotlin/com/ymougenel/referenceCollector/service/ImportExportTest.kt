@@ -1,11 +1,10 @@
-package com.ymougenel.referenceCollector
+package com.ymougenel.referenceCollector.service
 
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.model.Reference
 import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
-import com.ymougenel.referenceCollector.service.ImportExportService
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
