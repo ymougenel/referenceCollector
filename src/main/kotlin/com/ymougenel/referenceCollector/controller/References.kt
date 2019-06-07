@@ -86,7 +86,8 @@ class References {
         val pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(direction), orderBy)
         var references: Page<Reference>
         try {
-            references = referenceService.findFromFilter(pageRequest, filterBy, filter, orderBy)
+            val cleanedFilterBy = if (filter.isEmpty()) { "" } else { filterBy } // Clean filterBy value if filter is undefined
+            references = referenceService.findFromFilter(pageRequest, cleanedFilterBy, filter, orderBy)
 
         } catch (e: IllegalArgumentException) {
             references = Page.empty(pageRequest)

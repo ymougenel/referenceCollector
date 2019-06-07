@@ -24,6 +24,8 @@
     <input type="text" id="filter" name="filter" class="form-control mx-sm-3" th:value="${filter}"/>
 
     <button type="submit" class="btn btn-primary fas fa-search search-icon"></button>
+        <div class="result-count">Results: <span th:text="${page.totalElements}"></span></div>
+
 </form>
 </div>
 
