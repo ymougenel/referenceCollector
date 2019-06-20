@@ -13,12 +13,12 @@ data class Reference(
         var url: String?,
         @get:NotBlank(message = "Name is required")
         var name: String?,
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(name = "label_reference",
                 joinColumns = arrayOf(JoinColumn(name = "reference_id")),
                 inverseJoinColumns = arrayOf(JoinColumn(name = "label_id"))
         )
-        var labels: List<Label>?,
+        var labels: List<Label>,
         var type: ReferenceType?) {
-    constructor() : this(0L, "", "", null, null)
+    constructor() : this(0L, "", "", ArrayList(), null)
 }

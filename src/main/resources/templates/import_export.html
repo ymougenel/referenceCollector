@@ -2,28 +2,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Reference Collector</title>
-    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{../style/header.css}" rel="stylesheet">
+    <head th:insert="fragments/general.html :: headerfiles"> </head>
+    <link th:href="@{../style/import_export.css}" rel="stylesheet">
 </head>
 
 <body>
-<header th:insert="fragments/general.html :: header"> </header>
+<header th:insert="fragments/general.html :: header"></header>
 <div class="page">
-<h2>Import references</h2>
-<form method="POST" enctype="multipart/form-data" th:action="@{/profile/importReferences}">
-    <table>
-        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
-    </table>
-</form>
+    <h2>Import references</h2>
+    <form method="POST" enctype="multipart/form-data" th:action="@{/profile/importReferences}">
+        <table>
+            <tr>
+                <td>File to upload:</td>
+                <td><input type="file" name="file"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Upload"/></td>
+            </tr>
+        </table>
+    </form>
 
-<br />
-<h2>Export references</h2>
+    <br/>
+    <h2>Export references</h2>
 
-<a th:href="@{/profile/exportReferences}">Export</a>
-
+    <div class="export-container">
+        <a th:href="@{/profile/exportReferences(type='csv')}">
+            <div class="icon-container">
+                <i class="fas fa-file-csv fa-3x"></i>CSV
+            </div>
+        </a>
+        <a th:href="@{/profile/exportReferences(type='json')}">
+            <div class="icon-container">
+                <i class="fas fa-file-code fa-3x"></i>JSON
+            </div>
+        </a>
+    </div>
 </div>
+<footer th:insert="fragments/general.html :: footer"> </footer>
 
 <script th:src="@{../webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
 

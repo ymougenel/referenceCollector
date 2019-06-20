@@ -4,7 +4,7 @@ pipeline {
     environment {
       MAVEN_IMAGE = 'maven:3.6.1-jdk-8'
     }
-    
+
     stages {
         stage("Test") {
             steps {
@@ -16,6 +16,9 @@ pipeline {
             }
         }
        stage("Publish image") {
+           options {
+                timeout(time: 1, unit: 'HOURS')
+           }
            steps {
                script {
                   sh 'mvn clean package dockerfile:build'
@@ -32,7 +35,11 @@ pipeline {
                 environment name: 'env', value: 'dev'
             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/build.yml', playbook: 'ansible/playbook.yml')
+              ansiblePlaybook(  credentialsId: 'ssh_centos',
+                                inventory: '~/ansible/build.yml',
+                                playbook: 'ansible/playbook.yml',
+                                extraVars: [ "DB_RECREATE": "${SHOULD_RESTART_DB}" ]
+               )
             }
         }
         stage("Deploy Prod") {
@@ -40,7 +47,11 @@ pipeline {
                 environment name: 'env', value: 'prod'
             }
             steps {
-              ansiblePlaybook(credentialsId: 'ssh_centos', inventory: '~/ansible/prod.yml', playbook: 'ansible/playbook.yml')
+              ansiblePlaybook(  credentialsId: 'ssh_centos',
+                                inventory: '~/ansible/prod.yml',
+                                playbook: 'ansible/playbook.yml',
+                                extraVars: [ "DB_RECREATE": "${SHOULD_RESTART_DB}" ]
+               )
             }
         }
     }

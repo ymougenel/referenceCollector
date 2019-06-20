@@ -6,6 +6,7 @@
     pull: yes
     image: postgres:11.1
     state: started
+    recreate: "{{ DB_RECREATE }}"
     ports:
       - "{{ RC_DB_PORT }}:{{ DB_PORT }}"
     env:
@@ -19,7 +20,7 @@
     pull: yes
     image: "slonepi/reference-collector:{{ RC_APP_VERSION }}"
     state: started
-    restart: yes
+    recreate: yes
     ports:
       - "8092:8092"
     env:

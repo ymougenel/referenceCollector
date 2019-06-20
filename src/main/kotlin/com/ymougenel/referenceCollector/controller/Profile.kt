@@ -1,10 +1,6 @@
 package com.ymougenel.referenceCollector.controller
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.persistence.LabelDAO
-import com.ymougenel.referenceCollector.persistence.ReferenceDAO
+import com.ymougenel.referenceCollector.service.ImportExportService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.FileSystemResource
@@ -14,6 +10,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.io.File
+import java.security.InvalidParameterException
 import javax.servlet.http.HttpServletResponse
 
 /**
@@ -23,15 +20,12 @@ import javax.servlet.http.HttpServletResponse
 @Controller
 @RequestMapping("/profile")
 class Profile {
-    private var referencesDao: ReferenceDAO
-    private var labelDAO: LabelDAO
-    private var mapper = jacksonObjectMapper()
+    private var importExportService: ImportExportService
     var logger = LoggerFactory.getLogger(Profile::class.java)
 
     @Autowired
-    constructor(referencesDAO: ReferenceDAO, labelDAO: LabelDAO) {
-        this.referencesDao = referencesDAO
-        this.labelDAO = labelDAO
+    constructor(importExportService: ImportExportService) {
+        this.importExportService = importExportService
     }
 
     @GetMapping(path = arrayOf("importExport"))
@@ -42,31 +36,15 @@ class Profile {
     fun handleFileUpload(@RequestParam("file") file: MultipartFile,
                          redirectAttributes: RedirectAttributes): String {
         logger.info("Importing References")
-        val references = mapper.readValue<List<Reference>>(file.inputStream)
+        if (file.isEmpty) {
+            return "redirect:/profile/importExport"
+        } else if (file.originalFilename!!.endsWith(".json")) {
+            importExportService.importReferencesJSON(file.inputStream)
 
-        val currentLabelsNames = labelDAO.findAll()
-                .map { label -> label.name }
-                .toList()
-
-        // Persist all label (only once)
-        references
-                .flatMap { it.labels!!.asIterable() }
-                .toSet()
-                .stream()
-                .filter { !currentLabelsNames.contains(it.name) }
-                .forEach { it.id = 0; labelDAO.save(it) }
-
-
-        for (reference in references) {
-            if (referencesDao.findReferenceByNameContaining(reference.name!!).isEmpty()) {
-
-                for (lab in reference.labels!!) {
-                    lab.id = labelDAO.findByName(lab.name).id
-                }
-                referencesDao.save(reference)
-
-            }
+        } else {
+            importExportService.importReferencesCSV(file.inputStream)
         }
+
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
@@ -75,11 +53,23 @@ class Profile {
 
     @RequestMapping(value = arrayOf("/exportReferences"), produces = arrayOf("application/text"))
     @ResponseBody
-    fun downloadFile(response: HttpServletResponse): Resource {
+    fun downloadFile(@RequestParam("type", defaultValue = "csv") type: String,
+                     response: HttpServletResponse): Resource {
         logger.info("Exporting references")
-        val file = File("/tmp/export.json")
-        val references = referencesDao.findAll()
-        file.writeText(mapper.writeValueAsString(references))
+
+        val file: File
+        if (type == "json") {
+            file = File("/tmp/references.json")
+            file.writeText(importExportService.exportReferencesJSON())
+        } else if (type == "csv") {
+            file = File("/tmp/references.csv")
+            file.writeText(importExportService.exportReferencesCSV())
+        }
+        // Protect against path injection
+        else {
+            throw InvalidParameterException("Illegal file format")
+        }
+
         response.setContentType("application/text")
         response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
         response.setHeader("Content-Length", file.length().toString())

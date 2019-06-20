@@ -10,6 +10,11 @@
     margin-left: 105px;
 }
 
+.result-count {
+    margin-left: 15px;
+    color: #6c757d;
+}
+
 .plus-button:hover {
     color: #4884f2;
 }

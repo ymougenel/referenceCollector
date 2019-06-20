@@ -1,0 +1,16 @@
+
+footer {
+    background: #f5f5f5;
+}
+
+footer a {
+    color: inherit;
+}
+
+.footer-container {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    color: #6c757d
+}
