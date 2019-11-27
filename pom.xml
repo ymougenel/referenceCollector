@@ -167,6 +167,13 @@
                 </executions>
             </plugin>
 
+            <!--Git information used by actuator-->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.0.0</version>
+            </plugin>
+
         </plugins>
     </build>
 
