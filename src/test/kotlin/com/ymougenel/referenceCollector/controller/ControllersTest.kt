@@ -12,11 +12,13 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.hamcrest.Matchers.containsString
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 
 @RunWith(SpringRunner::class)
+@AutoConfigureMockMvc(secure = false)
 @WebMvcTest
 class ControllersTest {
 
