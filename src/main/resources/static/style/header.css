@@ -19,5 +19,8 @@
 }
 
 .logout {
-    background: #0069d9;
+    background: #74b2f2;
+    position: absolute;
+    right: 16px;
+    top: 6px;
 }

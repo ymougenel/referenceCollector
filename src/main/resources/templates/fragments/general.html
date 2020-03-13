@@ -20,7 +20,7 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/labels}">Labels</a>
         </li>
-        <div sec:authorize="hasRole('USER')">
+        <div sec:authorize="hasRole('ADMIN')">
             <li>
                 <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
             </li>
@@ -34,8 +34,8 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/tmp/admin}">admin</a>
         </li>
-        <div sec:authorize="isAuthenticated()" class="logout">
-            <form th:action="@{/logout}" method="post">
+        <div >
+            <form sec:authorize="isAuthenticated()" class="logout" th:action="@{/logout}" method="post">
                 <button class="btn btn-small" type="submit">
                     <i class="fas fa-sign-out-alt">Logout</i>
                 </button>
