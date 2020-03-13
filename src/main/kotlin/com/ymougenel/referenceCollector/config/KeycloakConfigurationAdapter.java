@@ -82,14 +82,19 @@ public class KeycloakConfigurationAdapter {
             http
                     .authorizeRequests()
                     .antMatchers("/tmp/user*").hasRole("USER")
+                    .antMatchers("/references/new").hasRole("USER")
+                    .antMatchers("/references/edit").hasRole("USER")
+                    .antMatchers("/references/delete").hasRole("USER")
+                    .antMatchers("/labels/delete").hasRole("USER")
+                    .antMatchers(HttpMethod.POST, "/label*").hasRole("USER")
                     .antMatchers("/tmp/admin*").hasRole("ADMIN")
                     .antMatchers("/profile/importExport").hasRole("ADMIN")
                     .anyRequest().permitAll()
-                    .and()
+                    .and() // logout endpoint
                     .logout()
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
-                    .and()
+                    .and() // handle 403
                     .exceptionHandling().accessDeniedPage("/403.html");
 
         }
