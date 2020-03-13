@@ -83,8 +83,11 @@ public class KeycloakConfigurationAdapter {
                     .authorizeRequests()
                     .antMatchers("/tmp/user*").hasRole("USER")
                     .antMatchers("/tmp/admin*").hasRole("ADMIN")
-                    .anyRequest().permitAll();
-
+                    .anyRequest().permitAll()
+                    .and()
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/");
 
         }
 

@@ -3,7 +3,6 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <head th:insert="fragments/general.html :: headerfiles"> </head>
-    <!--<link th:href="@{../style/import_export.css}" rel="stylesheet">-->
 </head>
 
 <body>
@@ -11,7 +10,7 @@
 
 <div class="page">
     <div>
-        <h1>User page</h1>
+        <span sec:authentication="name"></span>
     </div>
 </div>
 
