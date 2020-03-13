@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 import javax.validation.Valid
 
 @Controller
@@ -38,8 +39,10 @@ class LabelController {
         return "labels/list"
     }
 
+
     @PostMapping
-    fun updateLabel(@Valid label: Label, errors: Errors, model: Model): String {
+    fun updateLabel(@Valid label: Label, errors: Errors, principal: Principal, model: Model): String {
+        logger.info("label: (id=" + label.id + ", name=" + label.name + ") updated by user: " + principal.name)
         if (errors.hasErrors()) {
             logger.info("Error with labelUpdate" + errors.allErrors)
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
@@ -50,8 +53,8 @@ class LabelController {
     }
 
     @GetMapping("/delete")
-    fun deleteLabel(model: Model, @RequestParam("id") id: Long): String {
-        logger.info("Deleting label: " + id)
+    fun deleteLabel(principal: Principal, model: Model, @RequestParam("id") id: Long): String {
+        logger.info("label: " + id + " deletion by user: " + principal.name)
         labelDAO.deleteById(id)
         return "redirect:/labels"
     }

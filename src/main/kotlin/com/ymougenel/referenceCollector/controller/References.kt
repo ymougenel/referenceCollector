@@ -14,6 +14,7 @@ import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import java.lang.IllegalArgumentException
+import java.security.Principal
 import javax.validation.Valid
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -53,14 +54,16 @@ class References {
 
     // TODO: change me to deleteMapping
     @GetMapping(path = arrayOf("/delete"))
-    fun deleteRef(model: Model, @RequestParam("id") id: Long): String {
+    fun deleteRef(principal: Principal, model: Model, @RequestParam("id") id: Long): String {
+        logger.info("ref: " + id + " deletion by user: " + principal.name)
         logger.info("DeleteReference id=" + id)
         referenceService.deleteById(id)
         return "redirect:/references"
     }
 
     @PostMapping
-    fun postRef(@Valid reference: Reference, errors: Errors, model: Model): String {
+    fun postRef(@Valid reference: Reference, principal: Principal, errors: Errors, model: Model): String {
+        logger.info("ref: (id=" + reference.id + ", name=" + reference.name + ") posted by user: " + principal.name)
         if (errors.hasErrors()) {
             logger.info("PostReference errors: " + reference)
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
@@ -86,7 +89,11 @@ class References {
         val pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(direction), orderBy)
         var references: Page<Reference>
         try {
-            val cleanedFilterBy = if (filter.isEmpty()) { "" } else { filterBy } // Clean filterBy value if filter is undefined
+            val cleanedFilterBy = if (filter.isEmpty()) {
+                ""
+            } else {
+                filterBy
+            } // Clean filterBy value if filter is undefined
             references = referenceService.findFromFilter(pageRequest, cleanedFilterBy, filter, orderBy)
 
         } catch (e: IllegalArgumentException) {
