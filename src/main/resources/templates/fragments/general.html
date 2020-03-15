@@ -34,15 +34,15 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/tmp/admin}">admin</a>
         </li>
-        <div>
-            <form sec:authorize="isAuthenticated()" class="logout" th:action="@{/logout}" method="post">
+        <div class="logout">
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                 <button class="btn btn-small" type="submit">
-                    Logout<i class="fas fa-sign-out-alt"></i>
+                    Logout  <i class="fas fa-sign-out-alt"></i>
                 </button>
             </form>
-            <form sec:authorize="isAnonymous()" class="logout" th:action="@{/login}" method="post">
+            <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post">
                 <button class="btn btn-small" type="submit">
-                    Login<i class="fas fa-sign-in-alt"></i>
+                    Login  <i class="fas fa-sign-in-alt"></i>
                 </button>
             </form>
         </div>
