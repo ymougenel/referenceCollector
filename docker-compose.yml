@@ -11,6 +11,9 @@ services:
       - POSTGRES_USER=dbuser
     ports:
       - "5432:5432"
+    networks:
+      - rc
+
   rc-back:
     image: slonepi/reference-collector:0.2.0
     container_name: rc-app
@@ -25,4 +28,14 @@ services:
       - DATABASE_NAME=reference_collector
       - DATABASE_PORT=5432
     command: ["./docker-wait-for-it.sh"]
+    networks:
+      - keycloak
+      - rc
 
+networks:
+  keycloak:
+    name: keycloak-network
+    external: true
+  rc:
+    name: rc
+    driver: bridge
