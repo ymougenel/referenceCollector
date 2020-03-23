@@ -27,6 +27,7 @@ services:
       - DATABASE_PASSWORD=dbp4ss
       - DATABASE_NAME=reference_collector
       - DATABASE_PORT=5432
+      - KEYCLOAK_URL=http://keycloak.ymougenel.tech:8080/auth
     command: ["./docker-wait-for-it.sh"]
     networks:
       - keycloak
