@@ -25,15 +25,6 @@
                 <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
             </li>
         </div>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/tmp/public}">public</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/tmp/user}">user</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/tmp/admin}">admin</a>
-        </li>
         <div class="logout">
             <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
                 <button class="btn btn-small" type="submit">

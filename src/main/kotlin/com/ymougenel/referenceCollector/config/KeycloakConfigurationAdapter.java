@@ -82,8 +82,6 @@ public class KeycloakConfigurationAdapter {
             http
                     .authorizeRequests()
                     .antMatchers("/login").hasRole("USER")
-                    // TODO refactor: remote /tmp endpoints
-                    .antMatchers("/tmp/user*").hasRole("USER")
                     .antMatchers("/references/new").hasRole("USER")
                     .antMatchers("/references/edit").hasRole("USER")
                     .antMatchers("/references/delete").hasRole("USER")
