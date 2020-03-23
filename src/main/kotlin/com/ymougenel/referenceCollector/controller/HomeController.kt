@@ -9,4 +9,7 @@ class HomeController {
 
     @GetMapping
     fun getHomePage(): String = "redirect:/references"
+
+    @GetMapping("/login ")
+    fun loginRedirect(): String = "redirect:/references"
 }

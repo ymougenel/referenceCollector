@@ -5,4 +5,4 @@ while ! exec 6<>/dev/tcp/${DATABASE_HOST}/${DATABASE_PORT}; do
     sleep 10
 done
 
-java -Djava.security.egd=file:/dev/./urandom -jar -Dspring.profiles.active=container /app.jar
+java -Djava.security.egd=file:/dev/./urandom -jar -Dspring.profiles.active=container,keycloak /app.jar

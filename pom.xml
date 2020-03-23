@@ -29,6 +29,7 @@
         <!--Plugins-->
         <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
         <docker-spotify-plugin.version>1.4.13</docker-spotify-plugin.version>
+        <keycloak.version>6.0.1</keycloak.version>
     </properties>
 
     <dependencies>
@@ -116,6 +117,31 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- ######################################################################################################## -->
+        <!--SECURITY-->
+        <!-- ######################################################################################################## -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <version>${keycloak.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak.bom</groupId>
+            <artifactId>keycloak-adapter-bom</artifactId>
+            <version>${keycloak.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
 
     </dependencies>

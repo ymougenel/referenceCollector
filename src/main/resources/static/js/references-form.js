@@ -12,12 +12,20 @@ block = '<div class="custom-control custom-checkbox">' +
             name: $("#label_name_input").val()
         };
         $("#label_name_input").html("");
+        var token = $("input[name='_csrf']").val();
+        var header = "X-CSRF-TOKEN";
         $.ajax({
             url: "/label",
-            method: "post",
+            method: "POST",
+            crossDomain: true,
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(label),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader(header, token);
+            },
             success: function (label) {
                 $("#insertHere").append(block);
                 $("#label_added").html(label.name).attr("id", "label" + label.id).attr("for", label.id);

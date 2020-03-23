@@ -17,17 +17,17 @@
         <div th:each="label : ${labels}">
             <a th:href="@{/references(filterBy='labels',filter=${label.name})}"
                class="badge label" th:text="${label.name}"></a>
-            <span class="icons-container">
-            <a th:href="@{/labels/(id=${label.id})}"><i class="fa fa-edit fa-xs"></i></a>
-            <a th:href="@{/labels/delete(id=${label.id})}"><i class="fa fa-trash fa-xs"></i></a>
-        </span>
+            <span sec:authorize="hasRole('USER')" class="icons-container">
+                <a th:href="@{/labels/(id=${label.id})}"><i class="fa fa-edit fa-xs"></i></a>
+                <a th:href="@{/labels/delete(id=${label.id})}"><i class="fa fa-trash fa-xs"></i></a>
+            </span>
         </div>
 
     </div>
 
     <br/>
     <hr/>
-    <form method="POST" th:action="@{/labels}" th:object="${label}" class="was-validated">
+    <form sec:authorize="hasRole('USER')" method="POST" th:action="@{/labels}" th:object="${label}" class="was-validated">
         <h2 th:if="${label.id == 0}">Add Label</h2>
 
         <h2 th:if="${label.id != 0}">Edit Label</h2>

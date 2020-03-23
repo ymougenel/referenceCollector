@@ -36,6 +36,10 @@ Run the generated jar
 java -Dspring.profiles.active=dev -jar target/referenceCollector-X.X.X.jar
 ```
 
+*_Default user: login=user, password=password_*
+
+### Keyclaok
+**TODO**
 ## Deploy with Ansible
 
 Configure the inventory file and launch ansible:
