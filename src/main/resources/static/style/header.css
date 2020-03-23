@@ -13,15 +13,20 @@
     color: #d9dce0
 }
 
+.navbar {
+    list-style-type: none;
+}
+
 .page {
     margin-left: 15px;
     margin-right: 15px;
 }
 
-.logout {
+.log {
     background: #74b2f2;
     border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
-    position: absolute;
-    right: 16px;
-    top: 6px;
+}
+
+form i {
+    margin-left: 8px;
 }
