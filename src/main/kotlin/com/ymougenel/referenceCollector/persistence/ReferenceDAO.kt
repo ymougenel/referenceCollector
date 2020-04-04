@@ -11,4 +11,5 @@ interface ReferenceDAO : JpaRepository<Reference, Long> {
     fun findReferenceByNameContaining(name: String, pageable: Pageable): Page<Reference>
     fun findReferenceByNameContaining(name: String): List<Reference>
     fun findReferenceByUrlContaining(url: String, pageable: Pageable): Page<Reference>
+    fun findReferenceByOwner(url: String, pageable: Pageable): Page<Reference>
 }

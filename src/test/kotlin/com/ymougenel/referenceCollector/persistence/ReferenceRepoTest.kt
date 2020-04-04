@@ -35,7 +35,7 @@ class ReferenceRepoTest {
 
         // Save related reference/label
         lab1 = Label(0, "lab1")
-        ref1 = Reference(0, "", "ref1", listOf(lab1), ReferenceType.ARTICLE)
+        ref1 = Reference(0, "", "ref1", listOf(lab1), "user1", ReferenceType.ARTICLE)
 
         lab1 = labelDAO.save(lab1)
         ref1 = referenceDAO.save(ref1)
@@ -45,7 +45,7 @@ class ReferenceRepoTest {
     fun basic_CRUD_test() {
 
         // Create/Retrieve
-        var ref2 = Reference(0, "", "ref2", listOf(lab1), ReferenceType.ARTICLE)
+        var ref2 = Reference(0, "", "ref2", listOf(lab1), "user1", ReferenceType.ARTICLE)
         ref2 = referenceDAO.save(ref2)
         assertNotNull(referenceDAO.findReferenceByNameContaining("ref2"))
 

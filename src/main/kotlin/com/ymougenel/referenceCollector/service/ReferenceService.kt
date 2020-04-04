@@ -43,6 +43,8 @@ class ReferenceService {
             references = referencesDao.findReferenceByUrlContaining(filter, pageRequest)
         } else if (filterBy == "name") {
             references = referencesDao.findReferenceByNameContaining(filter, pageRequest)
+        } else if (filterBy == "owner") {
+            references = referencesDao.findReferenceByOwner(filter, pageRequest)
         } else {
             try {
                 val label = labelDao.findByName(filter)

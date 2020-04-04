@@ -47,7 +47,7 @@ class ImportExportService {
                     .map { it -> Label(0, it) }
                     .collect(Collectors.toList())
 
-            references.add(Reference(0L, content[1], content[0], labels, ReferenceType.valueOf(content[2])))
+            references.add(Reference(0L, content[1], content[0], labels, content[2], ReferenceType.ARTICLE))
         }
 
         persistImportedReference(references)
@@ -65,12 +65,12 @@ class ImportExportService {
         val sb = StringBuilder()
 
         // Add header
-        sb.append("NAME").append(CSV_DELIMITER).append("URL").append(CSV_DELIMITER).append("TYPE").append(CSV_DELIMITER).append("LABELS").append(NEW_LINE)
+        sb.append("NAME").append(CSV_DELIMITER).append("URL").append(CSV_DELIMITER).append("OWNER").append(CSV_DELIMITER).append("LABELS").append(NEW_LINE)
 
         for (ref in references) {
             sb.append(ref.name).append(CSV_DELIMITER)
                     .append(ref.url).append(CSV_DELIMITER)
-                    .append(ref.type).append(CSV_DELIMITER)
+                    .append(ref.owner).append(CSV_DELIMITER)
                     .append("[")
             sb.append(ref.labels.stream().map { label -> label.name }.collect(Collectors.joining(",")))
             sb.append("]").append(NEW_LINE)

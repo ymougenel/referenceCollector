@@ -30,10 +30,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 }
 
 .card-header a {
     color: #343a40;
+}
+
+.card-body {
+    padding-bottom: 1px;
+    padding-right: 1px;
 }
 
 .card-header a:hover {
@@ -58,6 +65,11 @@
     margin-right: 6px;
 }
 
+.card-author {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.6em;
+}
 /*.page-item.active .page-link {*/
     /*background-color: #b8daff;*/
 /*}*/

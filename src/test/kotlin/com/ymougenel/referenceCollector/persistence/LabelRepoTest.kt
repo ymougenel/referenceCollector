@@ -35,7 +35,7 @@ class LabelRepoTest {
 
         // Save related reference/label
         lab1 = Label(0, "lab1")
-        ref1 = Reference(0, "", "ref1", listOf(lab1), ReferenceType.ARTICLE)
+        ref1 = Reference(0, "", "ref1", listOf(lab1), "user", ReferenceType.ARTICLE)
 
         lab1 = labelDAO.save(lab1)
         ref1 = referenceDAO.save(ref1)

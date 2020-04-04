@@ -70,8 +70,8 @@ class References {
             model.addAttribute("types", ReferenceType.values())
             return "references/form"
         }
-
-        referenceService.save(reference);
+        reference.owner = principal.name
+        referenceService.save(reference)
         return "redirect:/references"
     }
 
