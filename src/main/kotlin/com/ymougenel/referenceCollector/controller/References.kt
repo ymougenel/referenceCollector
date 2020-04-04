@@ -1,7 +1,6 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.service.ReferenceService
 import org.slf4j.LoggerFactory
@@ -40,7 +39,6 @@ class References {
     fun getForm(model: Model): String {
         model.addAttribute("reference", Reference())
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-        model.addAttribute("types", ReferenceType.values())
         return "references/form"
     }
 
@@ -48,7 +46,6 @@ class References {
     fun editForm(model: Model, @RequestParam("id") id: Long): String {
         model.addAttribute("reference", referenceService.findById(id))
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-        model.addAttribute("types", ReferenceType.values())
         return "references/form"
     }
 
@@ -67,7 +64,6 @@ class References {
         if (errors.hasErrors()) {
             logger.info("PostReference errors: " + reference)
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-            model.addAttribute("types", ReferenceType.values())
             return "references/form"
         }
         reference.owner = principal.name

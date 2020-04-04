@@ -4,7 +4,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.springframework.beans.factory.annotation.Autowired
@@ -47,7 +46,7 @@ class ImportExportService {
                     .map { it -> Label(0, it) }
                     .collect(Collectors.toList())
 
-            references.add(Reference(0L, content[1], content[0], labels, content[2], ReferenceType.ARTICLE))
+            references.add(Reference(0L, content[1], content[0], labels, content[2]))
         }
 
         persistImportedReference(references)
