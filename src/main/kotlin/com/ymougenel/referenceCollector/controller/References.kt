@@ -1,7 +1,6 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.service.ReferenceService
 import org.slf4j.LoggerFactory
@@ -14,6 +13,7 @@ import org.springframework.ui.Model
 import org.springframework.validation.Errors
 import org.springframework.web.bind.annotation.*
 import java.lang.IllegalArgumentException
+import java.security.Principal
 import javax.validation.Valid
 import java.util.stream.Collectors
 import java.util.stream.IntStream
@@ -39,7 +39,6 @@ class References {
     fun getForm(model: Model): String {
         model.addAttribute("reference", Reference())
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-        model.addAttribute("types", ReferenceType.values())
         return "references/form"
     }
 
@@ -47,28 +46,28 @@ class References {
     fun editForm(model: Model, @RequestParam("id") id: Long): String {
         model.addAttribute("reference", referenceService.findById(id))
         model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-        model.addAttribute("types", ReferenceType.values())
         return "references/form"
     }
 
     // TODO: change me to deleteMapping
     @GetMapping(path = arrayOf("/delete"))
-    fun deleteRef(model: Model, @RequestParam("id") id: Long): String {
+    fun deleteRef(principal: Principal, model: Model, @RequestParam("id") id: Long): String {
+        logger.info("ref: " + id + " deletion by user: " + principal.name)
         logger.info("DeleteReference id=" + id)
         referenceService.deleteById(id)
         return "redirect:/references"
     }
 
     @PostMapping
-    fun postRef(@Valid reference: Reference, errors: Errors, model: Model): String {
+    fun postRef(@Valid reference: Reference, principal: Principal, errors: Errors, model: Model): String {
+        logger.info("ref: (id=" + reference.id + ", name=" + reference.name + ") posted by user: " + principal.name)
         if (errors.hasErrors()) {
             logger.info("PostReference errors: " + reference)
             model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
-            model.addAttribute("types", ReferenceType.values())
             return "references/form"
         }
-
-        referenceService.save(reference);
+        reference.owner = principal.name
+        referenceService.save(reference)
         return "redirect:/references"
     }
 
@@ -86,7 +85,11 @@ class References {
         val pageRequest = PageRequest.of(page, size, Sort.Direction.fromString(direction), orderBy)
         var references: Page<Reference>
         try {
-            val cleanedFilterBy = if (filter.isEmpty()) { "" } else { filterBy } // Clean filterBy value if filter is undefined
+            val cleanedFilterBy = if (filter.isEmpty()) {
+                ""
+            } else {
+                filterBy
+            } // Clean filterBy value if filter is undefined
             references = referenceService.findFromFilter(pageRequest, cleanedFilterBy, filter, orderBy)
 
         } catch (e: IllegalArgumentException) {

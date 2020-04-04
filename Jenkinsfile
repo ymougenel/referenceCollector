@@ -25,7 +25,7 @@ pipeline {
                }
                 script {
                   docker.withRegistry('', 'dockerhub-credentials') {
-                        docker.image("slonepi/reference-collector:latest").push()
+                        docker.image("slonepi/reference-collector:${APP_VERSION}").push()
                   }
                 }
            }

@@ -12,11 +12,14 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.beans.factory.annotation.Autowired
 
 import org.hamcrest.Matchers.containsString
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-
+//TODO: create tests for anonymous user
 @RunWith(SpringRunner::class)
+@AutoConfigureMockMvc
 @WebMvcTest
 class ControllersTest {
 
@@ -34,6 +37,7 @@ class ControllersTest {
 
 
     @Test
+    @WithMockUser(username="user",roles=["USER"])
     fun test_home_page() {
         mockMvc?.perform(get("/"))!!.andExpect(status().isFound)
     }
@@ -45,17 +49,20 @@ class ControllersTest {
 //    }
 
     @Test
+    @WithMockUser(username="user",roles=["USER"])
     fun test_reference_new() {
         mockMvc?.perform(get("/references/new"))!!.andExpect(status().isOk)
     }
 
     @Test
+    @WithMockUser(username="user",roles=["USER"])
     fun test_label_list() {
         mockMvc?.perform(get("/labels"))!!.andExpect(status().isOk)
                 .andExpect(content().string(containsString("Add Label")))
     }
 
     @Test
+    @WithMockUser(username="user",roles=["USER"])
     fun test_import_export() {
         mockMvc?.perform(get("/profile/importExport"))!!.andExpect(status().isOk)
                 .andExpect(content().string(containsString("Import references")))

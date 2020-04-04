@@ -19,6 +19,6 @@ data class Reference(
                 inverseJoinColumns = arrayOf(JoinColumn(name = "label_id"))
         )
         var labels: List<Label>,
-        var type: ReferenceType?) {
-    constructor() : this(0L, "", "", ArrayList(), null)
+        var owner: String?) {
+    constructor() : this(0L, "", "", ArrayList(),"")
 }

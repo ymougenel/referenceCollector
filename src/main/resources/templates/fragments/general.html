@@ -4,8 +4,8 @@
 <head th:fragment="headerfiles">
     <title>Reference Collector</title>
     <meta charset="UTF-8"/>
-    <link th:href="@{../webjars/bootstrap/4.3.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{../webjars/font-awesome/5.8.1/css/all.css}" rel="stylesheet">
+    <link th:href="@{../webjars/bootstrap/4.4.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{../webjars/font-awesome/5.12.0/css/all.css}" rel="stylesheet">
     <link th:href="@{../style/header.css}" rel="stylesheet">
     <link th:href="@{../style/footer.css}" rel="stylesheet">
 </head>
@@ -20,10 +20,28 @@
         <li class="nav-item">
             <a class="nav-link" th:href="@{/labels}">Labels</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
-        </li>
+        <div sec:authorize="hasRole('ADMIN')">
+            <li>
+                <a class="nav-link" th:href="@{/profile/importExport}">Import/Export</a>
+            </li>
+        </div>
 
+        <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="log">
+                        <button class="btn btn-small" type="submit">
+                            Logout<i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                    <form sec:authorize="isAnonymous()" th:action="@{/login}" method="post" class="log">
+                        <button class="btn btn-small" type="submit">
+                            Login<i class="fas fa-sign-in-alt"></i>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </nav>
     <br/>
 </div>

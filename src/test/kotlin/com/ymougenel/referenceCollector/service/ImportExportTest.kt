@@ -2,7 +2,6 @@ package com.ymougenel.referenceCollector.service
 
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.junit.Assert.*
@@ -29,9 +28,9 @@ class ImportExportTest {
     internal lateinit var referenceDAO: ReferenceDAO
 
     val labels: List<Label> = listOf(Label(0, "lab1"), Label(0, "lab2"))
-    val ref1 = Reference(0, "https://github.com/", "ref1", listOf(labels.get(0)), ReferenceType.ARTICLE)
-    val ref2 = Reference(0, "https://en.wikipedia.org/wiki/Alan_Turing", "ref2", listOf(labels.get(0), labels.get(1)), ReferenceType.ARTICLE)
-    val ref3 = Reference(0, "", "ref3", ArrayList(), ReferenceType.ARTICLE)
+    val ref1 = Reference(0, "https://github.com/", "ref1", listOf(labels.get(0)), "user1")
+    val ref2 = Reference(0, "https://en.wikipedia.org/wiki/Alan_Turing", "ref2", listOf(labels.get(0), labels.get(1)), "user1")
+    val ref3 = Reference(0, "", "ref3", ArrayList(), "user2")
 
     @Before
     fun clean() {

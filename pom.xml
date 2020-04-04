@@ -5,18 +5,32 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ymougenel</groupId>
     <artifactId>referenceCollector</artifactId>
-    <version>0.2.0</version>
+    <version>1.1.0</version>
     <name>referenceCollector</name>
     <description>Reference Collector</description>
 
     <properties>
+        <!--Spring boot & Kotlin-->
         <java.version>1.8</java.version>
-        <kotlin.version>1.2.71</kotlin.version>
+        <kotlin.version>1.3.61</kotlin.version>
+        <jackson-kotlin.version>2.10.1</jackson-kotlin.version>
+        <spring.security.test.version>5.3.0.RELEASE</spring.security.test.version>
+        <!--Web-->
+        <bootstrap.version>4.4.1</bootstrap.version>
+        <fontawesome.version>5.12.0</fontawesome.version>
+        <jquery.version>3.4.1</jquery.version>
+        <!--Database-->
+        <postgresql.version>42.2.2</postgresql.version>
+        <h2.version>1.4.200</h2.version>
+        <!--Plugins-->
+        <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
+        <docker-spotify-plugin.version>1.4.13</docker-spotify-plugin.version>
+        <keycloak.version>6.0.1</keycloak.version>
     </properties>
 
     <dependencies>
@@ -27,7 +41,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.2</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,24 +86,24 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>4.3.1</version>
+            <version>${bootstrap.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.9.7</version>
+            <version>${jackson-kotlin.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-            <version>5.8.1</version>
+            <version>${fontawesome.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.4.1</version>
+            <version>${jquery.version}</version>
         </dependency>
 
         <!--Required for Fragments-->
@@ -102,10 +116,40 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.199</version>
+            <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
 
+        <!-- ######################################################################################################## -->
+        <!--SECURITY-->
+        <!-- ######################################################################################################## -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+            <version>${keycloak.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak.bom</groupId>
+            <artifactId>keycloak-adapter-bom</artifactId>
+            <version>${keycloak.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring.security.test.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -145,10 +189,10 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.3.6</version>
+                <version>${docker-spotify-plugin.version}</version>
                 <configuration>
                     <repository>slonepi/reference-collector</repository>
-                    <!--<tag>${project.version}</tag>-->
+                    <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
@@ -165,6 +209,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!--Git information used by actuator-->
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
             </plugin>
 
         </plugins>

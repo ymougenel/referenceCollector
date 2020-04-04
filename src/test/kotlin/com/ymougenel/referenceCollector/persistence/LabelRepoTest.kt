@@ -2,9 +2,6 @@ package com.ymougenel.referenceCollector.persistence
 
 import com.ymougenel.referenceCollector.model.Label
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.model.ReferenceType
-import com.ymougenel.referenceCollector.persistence.LabelDAO
-import com.ymougenel.referenceCollector.persistence.ReferenceDAO
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -35,7 +32,7 @@ class LabelRepoTest {
 
         // Save related reference/label
         lab1 = Label(0, "lab1")
-        ref1 = Reference(0, "", "ref1", listOf(lab1), ReferenceType.ARTICLE)
+        ref1 = Reference(0, "", "ref1", listOf(lab1), "user")
 
         lab1 = labelDAO.save(lab1)
         ref1 = referenceDAO.save(ref1)

@@ -29,5 +29,9 @@
       DATABASE_PASSWORD: "{{ RC_DB_PWD }}"
       DATABASE_NAME: "{{ RC_DB_NAME }}"
       DATABASE_PORT: "{{ DB_PORT }}"
+      KEYCLOAK_URL: "{{ KEYCLOAK_URL }}"
+
     links:
       - rc-database
+    networks:
+      - name: "keycloak-network"
