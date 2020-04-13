@@ -39,7 +39,7 @@ block = '<div class="custom-control custom-checkbox">' +
 // Autocomplete the reference name from the url input
 $('#url_input').bind('input', function () {
     var url = $(this).val();
-    var API_URL = "http://textance.herokuapp.com/title/";
+    var API_URL = "https://textance.herokuapp.com/title/";
     $.ajax({
         url: API_URL + url,
         complete: function (data) {
