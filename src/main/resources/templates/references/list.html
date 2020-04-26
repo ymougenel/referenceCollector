@@ -16,10 +16,10 @@
     <form method="GET" th:action="@{/references}" class="form-inline" style="margin: 0 auto;">
         <div class="form-group">
             <select name="filterBy">
-                <option value="labels">LABEL</option>
-                <option value="name">NAME</option>
-                <option value="url">URL</option>
-                <option value="owner">OWNER</option>
+                <option value="labels" th:selected="${filterBy} == 'labels' ? true">LABEL</option>
+                <option value="name" th:selected="${filterBy} == 'name' ? true">NAME</option>
+                <option value="url" th:selected="${filterBy} == 'url' ? true">URL</option>
+                <option value="owner" th:selected="${filterBy} == 'owner' ? true">OWNER</option>
             </select>
             <br/>
 
