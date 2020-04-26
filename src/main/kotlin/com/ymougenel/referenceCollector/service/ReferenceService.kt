@@ -20,12 +20,12 @@ class ReferenceService {
 
     private val referencesDao: ReferenceDAO
 
-    private val labelDao: LabelDAO
+    private val labelService: LabelService
 
     @Autowired
-    constructor(referenceDao: ReferenceDAO, labelDao: LabelDAO) {
-        this.referencesDao = referenceDao;
-        this.labelDao = labelDao;
+    constructor(referenceDao: ReferenceDAO, labelService: LabelService) {
+        this.referencesDao = referenceDao
+        this.labelService = labelService
     }
 
     fun findById(id: Long): Optional<Reference> = referencesDao.findById(id)
@@ -47,7 +47,7 @@ class ReferenceService {
             references = referencesDao.findReferenceByOwner(filter, pageRequest)
         } else {
             try {
-                val label = labelDao.findByName(filter)
+                val label = labelService.findByName(filter)
                 references = referencesDao.findReferenceBylabelsContaining(label, pageRequest)
             } catch (e: EmptyResultDataAccessException) {
                 logger.error("Error while finding label from filter: " + e.message)

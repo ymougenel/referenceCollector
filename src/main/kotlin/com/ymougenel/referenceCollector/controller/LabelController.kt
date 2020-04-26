@@ -1,7 +1,7 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Label
-import com.ymougenel.referenceCollector.persistence.LabelDAO
+import com.ymougenel.referenceCollector.service.LabelService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -15,12 +15,12 @@ import javax.validation.Valid
 @RequestMapping("/labels")
 class LabelController {
 
-    private var labelDAO: LabelDAO
+    private var labelService: LabelService
     var logger = LoggerFactory.getLogger(LabelController::class.java)
 
     @Autowired
-    constructor(labelDAO: LabelDAO) {
-        this.labelDAO = labelDAO
+    constructor(labelService: LabelService) {
+        this.labelService = labelService
     }
 
 
@@ -30,10 +30,10 @@ class LabelController {
 
         logger.info("Getting labels: id=" + id)
 
-        model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+        model.addAttribute("labels", labelService.findAll().sortedBy { it.name })
 
         // Retrieve label or create new one
-        val label: Label = if (id != 0L) labelDAO.findById(id).get() else Label()
+        val label: Label = if (id != 0L) labelService.findById(id).get() else Label()
 
         model.addAttribute("label", label)
         return "labels/list"
@@ -45,17 +45,17 @@ class LabelController {
         logger.info("label: (id=" + label.id + ", name=" + label.name + ") updated by user: " + principal.name)
         if (errors.hasErrors()) {
             logger.info("Error with labelUpdate" + errors.allErrors)
-            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            model.addAttribute("labels", labelService.findAll().sortedBy { it.name })
             return "labels/list"
         }
-        labelDAO.save(label)
+        labelService.save(label)
         return "redirect:/labels"
     }
 
     @GetMapping("/delete")
     fun deleteLabel(principal: Principal, model: Model, @RequestParam("id") id: Long): String {
         logger.info("label: " + id + " deletion by user: " + principal.name)
-        labelDAO.deleteById(id)
+        labelService.deleteById(id)
         return "redirect:/labels"
     }
 }

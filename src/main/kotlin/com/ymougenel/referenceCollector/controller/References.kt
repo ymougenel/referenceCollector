@@ -1,7 +1,7 @@
 package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.model.Reference
-import com.ymougenel.referenceCollector.persistence.LabelDAO
+import com.ymougenel.referenceCollector.service.LabelService
 import com.ymougenel.referenceCollector.service.ReferenceService
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,27 +25,27 @@ class References {
 
     var logger = LoggerFactory.getLogger(References::class.java)
     private var referenceService: ReferenceService
-    private var labelDAO: LabelDAO
+    private var labelService: LabelService
 
     private var PAGINATION_RANGE = 3
 
     @Autowired
-    constructor(referencesDAO: ReferenceService, labelDAO: LabelDAO) {
+    constructor(referencesDAO: ReferenceService, labelService: LabelService) {
         this.referenceService = referencesDAO
-        this.labelDAO = labelDAO
+        this.labelService = labelService
     }
 
     @GetMapping(path = arrayOf("/new"))
     fun getForm(model: Model): String {
         model.addAttribute("reference", Reference())
-        model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+        model.addAttribute("labels", labelService.findAll())
         return "references/form"
     }
 
     @GetMapping(path = arrayOf("/edit"))
     fun editForm(model: Model, @RequestParam("id") id: Long): String {
         model.addAttribute("reference", referenceService.findById(id))
-        model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+        model.addAttribute("labels", labelService.findAll())
         return "references/form"
     }
 
@@ -63,7 +63,7 @@ class References {
         logger.info("ref: (id=" + reference.id + ", name=" + reference.name + ") posted by user: " + principal.name)
         if (errors.hasErrors()) {
             logger.info("PostReference errors: " + reference)
-            model.addAttribute("labels", labelDAO.findAll().sortedBy { it.name })
+            model.addAttribute("labels", labelService.findAll())
             return "references/form"
         }
         reference.owner = principal.name

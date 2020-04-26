@@ -59,8 +59,8 @@ class ImportExportTest {
         importExportService.importReferencesCSV(ByteArrayInputStream(exportOutput.toByteArray()))
 
         // Assert the labels have been imported
-        assertNotNull(labelDAO.findByName("lab1"))
-        assertNotNull(labelDAO.findByName("lab2"))
+        assertNotNull(labelDAO.findByNameContainingIgnoreCase("lab1"))
+        assertNotNull(labelDAO.findByNameContainingIgnoreCase("lab2"))
 
         // Assert the 3 references have been imported (and no more)
         assertEquals(3L, referenceDAO.count())

@@ -44,7 +44,7 @@ class LabelRepoTest {
         // Create/Retrieve
         var lab2 = Label(0, "lab2")
         lab2 = labelDAO.save(lab2)
-        assertNotNull(labelDAO.findByName("lab2"))
+        assertNotNull(labelDAO.findByNameContainingIgnoreCase("lab2"))
 
         // Update
         lab2.name = "updated_lab2"

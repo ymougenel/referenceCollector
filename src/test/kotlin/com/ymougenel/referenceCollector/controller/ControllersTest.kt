@@ -2,6 +2,7 @@ package com.ymougenel.referenceCollector.controller
 
 import com.ymougenel.referenceCollector.persistence.LabelDAO
 import com.ymougenel.referenceCollector.service.ImportExportService
+import com.ymougenel.referenceCollector.service.LabelService
 import com.ymougenel.referenceCollector.service.ReferenceService
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,6 +32,9 @@ class ControllersTest {
 
     @MockBean
     private val referenceService: ReferenceService? = null
+
+    @MockBean
+    private val labelService: LabelService? = null
 
     @MockBean
     private val importExportService: ImportExportService? = null
