@@ -101,7 +101,7 @@ class ImportExportService {
             if (referencesDao.findReferenceByNameContaining(reference.name!!).isEmpty()) {
 
                 for (lab in reference.labels) {
-                    lab.id = labelDAO.findByNameContainingIgnoreCase(lab.name).id
+                    lab.id = labelDAO.findByNameContainingIgnoreCase(lab.name).get(0).id
                 }
                 referencesDao.save(reference)
 

@@ -15,7 +15,10 @@ services:
       - rc
 
   rc-back:
-    image: slonepi/reference-collector:0.2.0
+    image: slonepi/reference-collector:1.2.1
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: rc-app
     depends_on:
       - rc-database

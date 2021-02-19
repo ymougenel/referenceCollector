@@ -19,7 +19,7 @@ class LabelService {
         this.labelDao = labelDao
     }
 
-    fun findByName(name: String): Label = labelDao.findByNameContainingIgnoreCase(name)
+    fun findByName(name: String): List<Label> = labelDao.findByNameContainingIgnoreCase(name)
     fun findAll(): List<Label> = labelDao.findAll().sortedBy { it.name }
     fun findById(id: Long): Optional<Label> = labelDao.findById(id)
     // TODO change

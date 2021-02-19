@@ -47,8 +47,9 @@ class ReferenceService {
             references = referencesDao.findReferenceByOwner(filter, pageRequest)
         } else {
             try {
-                val label = labelService.findByName(filter)
-                references = referencesDao.findReferenceBylabelsContaining(label, pageRequest)
+                val labels = labelService.findByName(filter)
+                //TODO: Page combinaition (instead of first label found)
+                references = referencesDao.findReferenceBylabelsContaining(labels.get(0), pageRequest)
             } catch (e: EmptyResultDataAccessException) {
                 logger.error("Error while finding label from filter: " + e.message)
                 throw IllegalArgumentException("No label matching: " + filter)
