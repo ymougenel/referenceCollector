@@ -26,7 +26,7 @@
         <jquery.version>3.4.1</jquery.version>
         <!--Database-->
         <postgresql.version>42.2.2</postgresql.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <!--Plugins-->
         <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
         <docker-spotify-plugin.version>1.4.13</docker-spotify-plugin.version>
